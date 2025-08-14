@@ -27,6 +27,4 @@ vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]])
 vim.keymap.set("t", "<C-[>", [[<C-\><C-n>]])
 vim.keymap.set("t", "C-c", [[<C-\><C-n>]])
 
-vim.keymap.set("n", "-", "<cmd>Oil<CR>")
-vim.keymap.set({ "i", "n", "v" }, "<C-c>", "<Esc>")
 
