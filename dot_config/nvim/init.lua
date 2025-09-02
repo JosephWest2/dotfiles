@@ -58,3 +58,37 @@ require("lazy").setup({
   -- automatically check for plugin updates
   checker = { enabled = true },
 })
+
+require('onedark').setup {
+    style = 'cool',
+    colors = {
+        bg0 = '#21262f',
+    },
+}
+require('onedark').load()
+
+require('autoclose').setup({
+    keys = {
+        ["("] = { escape = false, close = true, pair = "()" },
+        ["["] = { escape = false, close = true, pair = "[]" },
+        ["{"] = { escape = false, close = true, pair = "{}" },
+        [")"] = { escape = true, close = false, pair = "()" },
+        ["]"] = { escape = true, close = false, pair = "[]" },
+        ["}"] = { escape = true, close = false, pair = "{}" },
+        ['"'] = { escape = true, close = true, pair = '""' },
+        ["'"] = { escape = true, close = false, pair = "''" },
+        ["`"] = { escape = true, close = true, pair = "``" },
+    },
+    options = {
+        auto_indent = true,
+    },
+})
+
+require('nvim-treesitter.configs').setup {
+    sync_install = false,
+    auto_install = true,
+    highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = false,
+    }
+}
