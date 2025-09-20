@@ -1,12 +1,12 @@
 local M = {}
 
 local plugins = {
-    require('plugins.autoclose.lua'),
-    require('plugins.treesitter.lua'),
-    require('plugins.fzf-lua.lua'),
-    require('plugins.auto-save.lua'),
-    require('plugins.onedark.lua'),
-    require('plugins.lspconfig.lua'),
+    require('plugins.autoclose'),
+    require('plugins.treesitter'),
+    require('plugins.fzf-lua'),
+    require('plugins.auto-save'),
+    require('plugins.onedark'),
+    require('plugins.lspconfig'),
 }
 
 function M.init()
