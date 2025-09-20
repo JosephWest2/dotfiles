@@ -1,13 +1,15 @@
 local M = {}
 
 -- Imports are relative to the lua/ directory
+local prefix = 'joey.plugins.'
+
 local plugins = {
-    require('plugins.autoclose'),
-    require('plugins.treesitter'),
-    require('plugins.fzf-lua'),
-    require('plugins.auto-save'),
-    require('plugins.onedark'),
-    require('plugins.lspconfig'),
+    require(prefix .. 'autoclose'),
+    require(prefix .. 'treesitter'),
+    require(prefix .. 'fzf-lua'),
+    require(prefix .. 'auto-save'),
+    require(prefix .. 'onedark'),
+    require(prefix .. 'lspconfig'),
 }
 
 function M.init()

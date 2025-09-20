@@ -1,2 +1,3 @@
-require('baseKeybinds').init()
-require('lazySetup').init()
+require('joey.base-config').init()
+require('joey.keymaps')
+require('joey.lazy').init()
