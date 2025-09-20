@@ -5,6 +5,9 @@ function M.init()
 
     vim.o.shiftwidth = 4
 
+    vim.o.wrap = true
+    vim.o.breakindent = true
+
     vim.o.tabstop = 4
     vim.o.softtabstop = 4
     vim.o.expandtab = true
@@ -13,7 +16,6 @@ function M.init()
     vim.o.scrolloff = 8
     vim.o.nu = true
     vim.o.rnu = true
-
 end
 
 return M
