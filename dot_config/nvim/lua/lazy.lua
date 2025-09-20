@@ -1,12 +1,13 @@
 local M = {}
 
+-- Imports are relative to the lua/ directory
 local plugins = {
-    require('lazy.plugins.autoclose'),
-    require('lazy.plugins.treesitter'),
-    require('lazy.plugins.fzf-lua'),
-    require('lazy.plugins.auto-save'),
-    require('lazy.plugins.onedark'),
-    require('lazy.plugins.lspconfig'),
+    require('plugins.autoclose'),
+    require('plugins.treesitter'),
+    require('plugins.fzf-lua'),
+    require('plugins.auto-save'),
+    require('plugins.onedark'),
+    require('plugins.lspconfig'),
 }
 
 function M.init()
