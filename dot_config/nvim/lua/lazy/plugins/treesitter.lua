@@ -1,5 +1,5 @@
 return {
-    { 'nvim-treesitter/nvim-treesitter', lazy = false },
+    'nvim-treesitter/nvim-treesitter',
     config = function()
         require('nvim-treesitter.configs').setup {
             sync_install = false,
@@ -10,6 +10,6 @@ return {
             }
         }
     end,
-    lazy = true
+    lazy = false
 }
 
