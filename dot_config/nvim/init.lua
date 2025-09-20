@@ -1,2 +1,2 @@
 require('baseKeybinds').init()
-require('lazy.lazy').init()
+require('lazySetup').init()
