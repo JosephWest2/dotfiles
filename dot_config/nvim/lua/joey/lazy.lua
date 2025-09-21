@@ -10,6 +10,9 @@ local plugins = {
     require(prefix .. 'auto-save'),
     require(prefix .. 'onedark'),
     require(prefix .. 'lspconfig'),
+    require(prefix .. 'lazy-dev'),
+    require(prefix .. 'codeium'),
+    require(prefix .. 'blink-cmp'),
 }
 
 function M.init()
