@@ -1,11 +1,9 @@
 local M = {}
 
-local prefix = "joey.lsp."
-
 function M.init()
-    require(prefix .. "clangd").init()
-    require(prefix .. "lua_ls").init()
-    require(prefix .. "gopls").init()
+    vim.lsp.enable('clangd')
+    vim.lsp.enable('lua_ls')
+    vim.lsp.enable('gopls')
 
     vim.diagnostic.config({
         virtual_lines = {

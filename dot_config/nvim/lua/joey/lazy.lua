@@ -1,18 +1,23 @@
 local M = {}
 
--- Imports are relative to the lua/ directory
-local prefix = 'joey.plugins.'
+local function load_plugin_config(plugin_name)
+    -- Imports are relative to the lua/ directory
+    local prefix = 'joey.plugins.'
+    return require(prefix .. plugin_name)
+end
 
 local plugins = {
-    require(prefix .. 'autoclose'),
-    require(prefix .. 'treesitter'),
-    require(prefix .. 'fzf-lua'),
-    require(prefix .. 'auto-save'),
-    require(prefix .. 'onedark'),
-    require(prefix .. 'lspconfig'),
-    require(prefix .. 'lazy-dev'),
-    require(prefix .. 'codeium'),
-    require(prefix .. 'blink-cmp'),
+    load_plugin_config('autoclose'),
+    load_plugin_config('treesitter'),
+    load_plugin_config('fzf-lua'),
+    load_plugin_config('auto-save'),
+    load_plugin_config('onedark'),
+    load_plugin_config('lspconfig'),
+    load_plugin_config('lazy-dev'),
+    load_plugin_config('codeium'),
+    load_plugin_config('blink-cmp'),
+    load_plugin_config('dap'),
+    load_plugin_config('toggleterm'),
 }
 
 function M.init()
