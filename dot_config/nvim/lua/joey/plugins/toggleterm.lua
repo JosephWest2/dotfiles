@@ -4,7 +4,7 @@ return {
     config = function()
         require("toggleterm").setup({
             direction = "float",
-            open_mapping = [[<leader>t]],
+            open_mapping = [[<c-\>]],
         })
     end
 }

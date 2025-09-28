@@ -18,6 +18,8 @@ local plugins = {
     load_plugin_config('blink-cmp'),
     load_plugin_config('dap'),
     load_plugin_config('toggleterm'),
+    load_plugin_config('mason'),
+    load_plugin_config('overseer'),
 }
 
 function M.init()
@@ -40,7 +42,6 @@ function M.init()
 
     require("lazy").setup({
       spec = plugins,
-      checker = { enabled = true },
     })
 
 end

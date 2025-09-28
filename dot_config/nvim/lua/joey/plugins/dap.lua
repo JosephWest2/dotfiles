@@ -1,90 +1,15 @@
-local function c_cpp_setup(dap)
-    dap.adapters.gdb = {
-        type = "executable",
-        command = "gdb",
-        args = { "--interpreter=dap", "--eval-command", "set print pretty on" }
-    }
-    dap.configurations.c = {
-        {
-            name = "Launch",
-            type = "gdb",
-            request = "launch",
-            program = function()
-                return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-            end,
-            args = {}, -- provide arguments if needed
-            cwd = "${workspaceFolder}",
-            stopAtBeginningOfMainSubprogram = false,
+-- Requires vscode-cpptools extension installed and the binary OpenDebugAD7 pointed to by command
+local function c_cpp_rust_setup(dap)
+    dap.adapters.codelldb = {
+        type = "server",
+        port = "${port}",
+        executable = {
+            command = "codelldb",
+            args = { "--port", "${port}" },
         },
-        {
-            name = "Select and attach to process",
-            type = "gdb",
-            request = "attach",
-            program = function()
-                return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-            end,
-            pid = function()
-                local name = vim.fn.input('Executable name (filter): ')
-                return require("dap.utils").pick_process({ filter = name })
-            end,
-            cwd = '${workspaceFolder}'
-        },
-        {
-            name = 'Attach to gdbserver :1234',
-            type = 'gdb',
-            request = 'attach',
-            target = 'localhost:1234',
-            program = function()
-                return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-            end,
-            cwd = '${workspaceFolder}'
-        }
     }
-    dap.configurations.cpp = dap.configurations.c
-end
-
-local function rust_setup(dap)
-    dap.adapters["rust-gdb"] = {
-        type = "executable",
-        command = "rust-gdb",
-        args = { "--interpreter=dap", "--eval-command", "set print pretty on" }
-    }
-    dap.configurations.rust = {
-        {
-            name = "Launch",
-            type = "rust-gdb",
-            request = "launch",
-            program = function()
-                return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-            end,
-            args = {}, -- provide arguments if needed
-            cwd = "${workspaceFolder}",
-            stopAtBeginningOfMainSubprogram = false,
-        },
-        {
-            name = "Select and attach to process",
-            type = "rust-gdb",
-            request = "attach",
-            program = function()
-                return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-            end,
-            pid = function()
-                local name = vim.fn.input('Executable name (filter): ')
-                return require("dap.utils").pick_process({ filter = name })
-            end,
-            cwd = "${workspaceFolder}"
-        },
-        {
-            name = "Attach to gdbserver :1234",
-            type = "rust-gdb",
-            request = "attach",
-            target = "localhost:1234",
-            program = function()
-                return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-            end,
-            cwd = '${workspaceFolder}'
-        }
-    }
+    dap.configurations.c = dap.configurations.cpp
+    dap.configurations.rust = dap.configurations.cpp
 end
 
 return {
@@ -94,16 +19,48 @@ return {
         "leoluz/nvim-dap-go",
         "nvim-neotest/nvim-nio",
         "nvim-treesitter/nvim-treesitter",
+        "theHamsta/nvim-dap-virtual-text",
     },
     config = function()
-        require("dapui").setup()
+        local dap = require('dap')
+        local dap_ui = require('dapui')
+
+        dap.defaults.fallback.external_terminal = {
+            command = "/usr/bin/kitty",
+            args = { "--single-instance", "--detach" },
+            cwd = vim.fn.getcwd(),
+        }
+
+        require("nvim-dap-virtual-text").setup()
         require("dap-go").setup()
 
-        local dap = require('dap')
+        dap_ui.setup()
 
-        c_cpp_setup(dap)
-        rust_setup(dap)
+        c_cpp_rust_setup(dap)
+
+        dap.listeners.before.attach.dapui_config = function()
+            dap_ui.open()
+        end
+        dap.listeners.before.launch.dapui_config = function()
+            dap_ui.open()
+        end
+        dap.listeners.before.event_terminated.dapui_config = function()
+            dap_ui.close()
+        end
+        dap.listeners.before.event_exited.dapui_config = function()
+            dap_ui.close()
+        end
+        dap.listeners.before.disconnect.dapui_config = function()
+            dap_ui.close()
+        end
+
         vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint)
-        vim.keymap.set("n", "<F5>", dap.continue)
+        vim.keymap.set("n", "<leader>B", function() dap.toggle_breakpoint(vim.fn.input("Breakpoint condition: ")) end)
+        vim.keymap.set("n", "<leader>dn", dap.continue)
+        vim.keymap.set("n", "<leader>di", dap.step_into)
+        vim.keymap.set("n", "<leader>do", dap.step_over)
+        vim.keymap.set("n", "<leader>du", dap.step_out)
+        vim.keymap.set("n", "<leader>ds", dap.terminate)
+        vim.keymap.set("n", "<leader>dc", dap.clear_breakpoints)
     end
 }

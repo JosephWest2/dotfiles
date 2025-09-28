@@ -29,10 +29,10 @@ function M.init()
     vim.keymap.set("n", "<C-,>", vim.lsp.buf.code_action)
 
     -- rename using lsp
-    vim.keymap.set("n", "<F2>", vim.lsp.buf.rename)
+    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename)
 
     -- format using lsp
-    vim.keymap.set("n", "<F3>", vim.lsp.buf.format)
+    vim.keymap.set("n", "<leader>fm", vim.lsp.buf.format)
 
 end
 
