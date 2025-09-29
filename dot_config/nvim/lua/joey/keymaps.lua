@@ -19,7 +19,6 @@ function M.init()
     -- give the same keybinds to get out of terminal
     vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]])
     vim.keymap.set("t", "<C-[>", [[<C-\><C-n>]])
-    vim.keymap.set("t", "<C-c>", [[<C-\><C-n>]])
 
     -- next and previous quickfix list keybinds
     vim.keymap.set("n", "<A-j>", ":cnext<CR>")
@@ -33,6 +32,9 @@ function M.init()
 
     -- format using lsp
     vim.keymap.set("n", "<leader>fm", vim.lsp.buf.format)
+
+    -- go to definition
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition)
 
 end
 
