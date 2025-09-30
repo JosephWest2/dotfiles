@@ -1,0 +1,3 @@
+{{- if ne .chezmoi.hostname "joeyarchlinux" }}
+    dot_config/hypr
+{{- end}}
