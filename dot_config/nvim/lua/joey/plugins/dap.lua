@@ -8,6 +8,18 @@ local function c_cpp_rust_setup(dap)
             args = { "--port", "${port}" },
         },
     }
+    dap.configurations.cpp = {
+        {
+            name = "Launch file",
+            type = "codelldb",
+            request = "launch",
+            program = function()
+                return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+            end,
+            cwd = '${workspaceFolder}',
+            stopOnEntry = false,
+        },
+    }
     dap.configurations.c = dap.configurations.cpp
     dap.configurations.rust = dap.configurations.cpp
 end
@@ -37,9 +49,6 @@ local function go_setup()
         },
     })
 end
-
-
-
 
 return {
     'mfussenegger/nvim-dap',
@@ -79,16 +88,15 @@ return {
             dap_ui.close()
         end
 
+        vim.keymap.set("n", "<leader>?", function() dap_ui.eval(nil, { enter = true }) end)
         vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint)
         vim.keymap.set("n", "<leader>B", function() dap.toggle_breakpoint(vim.fn.input("Breakpoint condition: ")) end)
         vim.keymap.set("n", "<leader>dn", dap.continue)
         vim.keymap.set("n", "<leader>di", dap.step_into)
         vim.keymap.set("n", "<leader>do", dap.step_over)
         vim.keymap.set("n", "<leader>du", dap.step_out)
-        vim.keymap.set("n", "<leader>ds", function()
-            dap.terminate()
-            dap_ui.close()
-        end)
+        vim.keymap.set("n", "<leader>ds", dap.terminate)
+        vim.keymap.set("n", "<leader>dt", dap_ui.toggle)
         vim.keymap.set("n", "<leader>dc", dap.clear_breakpoints)
     end
 }
