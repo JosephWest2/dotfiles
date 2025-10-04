@@ -36,6 +36,18 @@ function M.init()
     -- go to definition
     vim.keymap.set("n", "gd", vim.lsp.buf.definition)
 
+    -- tab keymaps (requires fzf-lua)
+    vim.keymap.set("n", "<C-t>", function()
+        vim.cmd("tabnew")
+        vim.cmd("FzfLua files")
+    end)
+
+    vim.keymap.set("n", "<C-1>", function() vim.api.nvim_set_current_tabpage(1) end)
+    vim.keymap.set("n", "<C-2>", function() vim.api.nvim_set_current_tabpage(2) end)
+    vim.keymap.set("n", "<C-3>", function() vim.api.nvim_set_current_tabpage(3) end)
+    vim.keymap.set("n", "<C-4>", function() vim.api.nvim_set_current_tabpage(4) end)
+    vim.keymap.set("n", "<C-5>", function() vim.api.nvim_set_current_tabpage(5) end)
+
 end
 
 return M
