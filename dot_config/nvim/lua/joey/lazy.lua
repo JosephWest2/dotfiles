@@ -22,6 +22,7 @@ local plugins = {
     load_plugin_config('overseer'),
     load_plugin_config('auto-session'),
     load_plugin_config('yazi'),
+    load_plugin_config('harpoon'),
 }
 
 function M.init()
