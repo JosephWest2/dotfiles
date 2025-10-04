@@ -20,6 +20,8 @@ local plugins = {
     load_plugin_config('toggleterm'),
     load_plugin_config('mason'),
     load_plugin_config('overseer'),
+    load_plugin_config('auto-session'),
+    load_plugin_config('yazi'),
 }
 
 function M.init()
