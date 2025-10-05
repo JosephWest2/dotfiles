@@ -1,9 +1,9 @@
 local M = {}
 
 function M.init()
-    -- recenter lines on <C-d> and <C-u>
-    vim.keymap.set("n", "<C-d>", "<C-d>zz")
-    vim.keymap.set("n", "<C-u>", "<C-u>zz")
+    -- recenter lines on <C-d> and <C-u>, move 1/3 window instead of 1/2
+    vim.keymap.set("n", "<C-d>", "20jzz")
+    vim.keymap.set("n", "<C-u>", "20kzz")
 
     -- copy to clipboard keymaps
     vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
@@ -38,15 +38,18 @@ function M.init()
 
     -- tab keymaps (requires fzf-lua)
     vim.keymap.set("n", "<C-t>", function()
+        local bufno = vim.api.nvim_get_current_buf()
+        local cursorPos = vim.api.nvim_win_get_cursor(0)
         vim.cmd("tabnew")
-        vim.cmd("FzfLua files")
+        vim.cmd("b" .. bufno)
+        vim.api.nvim_win_set_cursor(0, cursorPos)
     end)
 
-    vim.keymap.set("n", "<C-1>", function() vim.api.nvim_set_current_tabpage(1) end)
-    vim.keymap.set("n", "<C-2>", function() vim.api.nvim_set_current_tabpage(2) end)
-    vim.keymap.set("n", "<C-3>", function() vim.api.nvim_set_current_tabpage(3) end)
-    vim.keymap.set("n", "<C-4>", function() vim.api.nvim_set_current_tabpage(4) end)
-    vim.keymap.set("n", "<C-5>", function() vim.api.nvim_set_current_tabpage(5) end)
+    vim.keymap.set("n", "<C-1>", function() vim.cmd("tabnext 1") end)
+    vim.keymap.set("n", "<C-2>", function() vim.cmd("tabnext 2") end)
+    vim.keymap.set("n", "<C-3>", function() vim.cmd("tabnext 3") end)
+    vim.keymap.set("n", "<C-4>", function() vim.cmd("tabnext 4") end)
+    vim.keymap.set("n", "<C-5>", function() vim.cmd("tabnext 5") end)
 
 end
 
