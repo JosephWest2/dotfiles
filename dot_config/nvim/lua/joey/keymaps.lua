@@ -22,7 +22,6 @@ function M.init()
 
     -- next and previous quickfix list keybinds
     vim.keymap.set("n", "<A-j>", ":cnext<CR>")
-    vim.keymap.set("n", "<A-k>", ":cprev<CR>")
 
     -- lsp code action
     vim.keymap.set("n", "<C-,>", vim.lsp.buf.code_action)
@@ -53,7 +52,6 @@ function M.init()
     vim.keymap.set("n", "<C-3>", function() vim.cmd("tabnext 3") end)
     vim.keymap.set("n", "<C-4>", function() vim.cmd("tabnext 4") end)
     vim.keymap.set("n", "<C-5>", function() vim.cmd("tabnext 5") end)
-
 end
 
 return M
