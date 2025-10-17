@@ -23,6 +23,7 @@ local plugins = {
     load_plugin_config('auto-session'),
     load_plugin_config('yazi'),
     load_plugin_config('marks'),
+    load_plugin_config('clangd-extensions'),
 }
 
 function M.init()
