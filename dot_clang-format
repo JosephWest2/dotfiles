@@ -4,3 +4,4 @@ BinPackParameters: false
 AllowAllParametersOfDeclarationOnNextLine: false
 IndentWidth: 4
 AccessModifierOffset: -2
+ColumnLimit: 120
