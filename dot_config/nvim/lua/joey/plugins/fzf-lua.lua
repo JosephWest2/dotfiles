@@ -4,7 +4,8 @@ return {
     config = function()
         local fzf = require('fzf-lua')
         vim.keymap.set("n", "<leader>ff", function() fzf.files() end)
-        vim.keymap.set("n", "<leader>gg", function() fzf.grep_project() end)
+        vim.keymap.set("n", "<leader>gg", function() fzf.live_grep() end)
+        vim.keymap.set("n", "<leader>gf", function() fzf.grep_project() end)
 
         fzf.setup({
             keymap = {

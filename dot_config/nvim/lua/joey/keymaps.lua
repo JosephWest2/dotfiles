@@ -42,6 +42,9 @@ function M.init()
     -- go to type definition
     vim.keymap.set("n", "gt", vim.lsp.buf.type_definition)
 
+    -- go to implementation
+    vim.keymap.set("n", "gi", vim.lsp.buf.implementation)
+
     -- tab keymaps (requires fzf-lua)
     vim.keymap.set("n", "<C-t>", function()
         local bufno = vim.api.nvim_get_current_buf()
