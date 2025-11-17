@@ -6,9 +6,10 @@ return {
         local harpoon = require("harpoon")
         harpoon:setup()
 
-        vim.keymap.set("n", "<leader>ht", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+        vim.keymap.set("n", "<leader>hs", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
         vim.keymap.set("n", "<leader>ha", function() harpoon:list():add() end)
         vim.keymap.set("n", "<leader>hr", function() harpoon:list():remove() end)
+        vim.keymap.set("n", "<leader>hc", function() harpoon:list():clear() end)
 
         vim.keymap.set("n", "<leader>h1", function() harpoon:list():replace_at(1) end)
         vim.keymap.set("n", "<leader>h2", function() harpoon:list():replace_at(2) end)
