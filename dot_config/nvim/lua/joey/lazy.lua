@@ -24,6 +24,7 @@ local plugins = {
     load_plugin_config('yazi'),
     load_plugin_config('marks'),
     load_plugin_config('clangd-extensions'),
+    load_plugin_config('harpoon')
 }
 
 function M.init()
