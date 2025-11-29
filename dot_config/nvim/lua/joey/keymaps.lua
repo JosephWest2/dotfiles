@@ -16,6 +16,9 @@ function M.init()
     -- substitute word under cursor across the whole file
     vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>]])
 
+    -- toggle / highlighting
+    vim.keymap.set("n", "<leader>hl", ":set hlsearch! hlsearch?<CR>")
+
     -- give the same keybinds to get out of terminal
     vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]])
     vim.keymap.set("t", "<C-[>", [[<C-\><C-n>]])
