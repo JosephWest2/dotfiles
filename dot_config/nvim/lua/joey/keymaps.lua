@@ -48,6 +48,9 @@ function M.init()
     -- go to implementation
     vim.keymap.set("n", "gi", vim.lsp.buf.implementation)
 
+    -- restart lsp
+    vim.keymap.set("n", "<leader>lr", ":LspRestart<CR>")
+
     -- tab keymaps (requires fzf-lua)
     vim.keymap.set("n", "<C-t>", function()
         local bufno = vim.api.nvim_get_current_buf()
