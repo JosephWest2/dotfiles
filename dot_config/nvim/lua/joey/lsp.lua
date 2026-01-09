@@ -7,6 +7,7 @@ function M.init()
     vim.lsp.enable('rust_analyzer')
     vim.lsp.enable('zls')
     vim.lsp.enable('templ')
+    vim.lsp.enable('svelte-language-server')
     vim.g.zig_fmt_autosave = 0
 
     vim.diagnostic.config({
