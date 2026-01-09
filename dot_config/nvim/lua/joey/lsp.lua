@@ -8,6 +8,7 @@ function M.init()
     vim.lsp.enable('zls')
     vim.lsp.enable('templ')
     vim.lsp.enable('svelte')
+    vim.lsp.enable('vtsls')
     vim.g.zig_fmt_autosave = 0
 
     vim.diagnostic.config({
