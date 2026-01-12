@@ -20,13 +20,26 @@ function M.init()
     vim.o.softtabstop = 4
     vim.o.expandtab = true
 
-    -- limit scroll to 8 lines from bottom, enable 
+    -- limit scroll to 8 lines from bottom, enable
     vim.o.termguicolors = true
     vim.o.scrolloff = 8
 
     -- enable line numbers and relative line numbers
     vim.o.nu = true
     vim.o.rnu = true
+
+    local indent_group = vim.api.nvim_create_augroup("IndentSettings", { clear = true })
+
+    vim.api.nvim_create_autocmd("FileType", {
+        group = indent_group,
+        pattern = { "javascript", "typescript", "typescriptreact", "javascriptreact" },
+        callback = function()
+            vim.opt_local.tabstop = 2
+            vim.opt_local.shiftwidth = 2
+            vim.opt_local.softtabstop = 2
+            vim.opt_local.expandtab = true
+        end,
+    })
 end
 
 return M
