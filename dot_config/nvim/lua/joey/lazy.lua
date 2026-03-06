@@ -25,6 +25,7 @@ local plugins = {
     load_plugin_config('marks'),
     load_plugin_config('clangd-extensions'),
     load_plugin_config('harpoon'),
+    load_plugin_config('opencode')
 }
 
 function M.init()
