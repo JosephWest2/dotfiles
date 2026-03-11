@@ -12,5 +12,7 @@ return {
             { expr = true, silent = true })
         vim.keymap.set('i', '<C-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end,
             { expr = true, silent = true })
+        vim.keymap.set('n', '<leader>ct', "<cmd>Codeium Toggle<CR>",
+            { expr = true, silent = true })
     end
 }
