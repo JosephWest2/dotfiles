@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Zen Browser (Private Window)
+GenericName=Web Browser
+Comment=Open a new private window in Zen Browser
+Exec=zen-browser --private-window %u
+Icon=zen-browser
+Terminal=false
+Categories=Network;WebBrowser;
+MimeType=text/html;text/xml;application/xhtml+xml;application/xml;application/rss+xml;application/rdf+xml;x-scheme-handler/http;x-scheme-handler/https;
+StartupNotify=true
+StartupWMClass=zen-browser
+Keywords=Internet;WWW;Browser;Private;Incognito;

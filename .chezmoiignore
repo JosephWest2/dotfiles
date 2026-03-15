@@ -1,4 +1,5 @@
    dot_config/private_fish/conf.d/antropic-api.fish 
 {{- if ne .chezmoi.hostname "joeyarchlinux" }}
-    dot_config/hypr
+    private_dot_local/private_share/applications/zen-private.desktop
+    private
 {{- end}}
