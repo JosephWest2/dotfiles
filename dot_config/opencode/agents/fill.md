@@ -16,8 +16,10 @@ tools:
     bash: false
     question: false
     write: false
+permission:
+    edit: "allow"
 ---
-You fill in code blocks. Do not make edits outside of the section of code specified.
+You fill in code blocks. Edit the file and complete the code block, but do not make edits outside of the section of code specified.
 
 - give a best effort, try your best to avoid any compile / lsp errors but if it is impossible to fill in the code without them, still do so even if this results in lsp errors
 - look at existing code and context and try to fit your solution to it
