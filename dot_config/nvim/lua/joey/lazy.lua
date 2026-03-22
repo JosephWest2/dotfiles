@@ -27,6 +27,7 @@ local plugins = {
     load_plugin_config('harpoon'),
     load_plugin_config('opencode'),
     load_plugin_config('markview'),
+    load_plugin_config('nvim-tree')
 }
 
 function M.init()
