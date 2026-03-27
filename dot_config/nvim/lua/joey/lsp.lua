@@ -10,6 +10,8 @@ function M.init()
     vim.lsp.enable('svelte')
     vim.lsp.enable('vtsls')
     vim.lsp.enable('jdtls')
+    vim.lsp.enable('pyright')
+
     vim.g.zig_fmt_autosave = 0
 
     vim.diagnostic.config({
