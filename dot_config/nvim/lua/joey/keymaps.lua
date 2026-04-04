@@ -2,8 +2,8 @@ local M = {}
 
 function M.init()
     -- recenter lines on <C-d> and <C-u>, move 1/3 window instead of 1/2
-    vim.keymap.set("n", "<C-d>", "24jzz")
-    vim.keymap.set("n", "<C-u>", "24kzz")
+    vim.keymap.set("n", "<C-d>", "24j")
+    vim.keymap.set("n", "<C-u>", "24k")
 
     -- copy to clipboard keymaps
     vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])

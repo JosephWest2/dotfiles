@@ -20,6 +20,19 @@ function M.init()
         }
     })
 
+    local orig = vim.lsp.handlers["textDocument/rename"]
+    vim.lsp.handlers["textDocument/rename"] = function(err, result, ctx, config)
+        local ret = orig(err, result, ctx, config)
+        vim.cmd("silent! wa")
+        return ret
+    end
+
+    local orig = vim.lsp.handlers["workspace/applyEdit"]
+    vim.lsp.handlers["workspace/applyEdit"] = function(err, result, ctx, config)
+        local ret = orig(err, result, ctx, config)
+        vim.cmd("silent! wa") -- write all after LSP workspace edit
+        return ret
+    end
 end
 
 return M
