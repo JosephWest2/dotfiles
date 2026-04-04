@@ -8,7 +8,7 @@ return {
     config = function()
         vim.g.loaded_netrw = 1
         vim.g.loaded_netrwPlugin = 1
-        vim.keymap.set("n", "<leader>t", "<cmd>NvimTreeToggle<CR>")
+        vim.keymap.set("n", "<leader>t", "<cmd>NvimTreeOpen<CR>")
         require("nvim-tree").setup {}
     end,
 }
