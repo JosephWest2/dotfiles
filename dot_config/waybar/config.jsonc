@@ -9,7 +9,7 @@
     "modules-right": [],
 
     "hyprland/workspaces": {
-        "format": "{id} {windows}",
+        "format": "<span color='#03cffc'>{id}</span> {windows}",
         "format-window-separator": " · ",
         "window-rewrite-default": "{title}",
         "window-rewrite": {
