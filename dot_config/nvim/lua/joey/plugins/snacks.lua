@@ -15,9 +15,14 @@ return {
         notifier = {
             enabled = true
         },
-
         scroll = {
-            enabled = true
-        },
-    },
+            enabled = true,
+            animate = {
+                duration = {
+                    step = 10,
+                    total = 100 
+                }
+            }
+        }
+    }
 }
