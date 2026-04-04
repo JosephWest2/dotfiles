@@ -19,6 +19,7 @@ function M.init()
             current_line = true
         }
     })
+
 end
 
 return M

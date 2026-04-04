@@ -7,14 +7,15 @@ local function load_plugin_config(plugin_name)
 end
 
 local plugins = {
-    load_plugin_config('autoclose'),
+    --load_plugin_config('autoclose'),
+    load_plugin_config('autopairs'),
     load_plugin_config('treesitter'),
     load_plugin_config('fzf-lua'),
     load_plugin_config('auto-save'),
     --load_plugin_config('onedark'),
     --load_plugin_config('catppuccin'),
-    load_plugin_config('tokyonight'),
     --load_plugin_config('kanagawa'),
+    load_plugin_config('tokyonight'),
     load_plugin_config('lspconfig'),
     load_plugin_config('lazy-dev'),
     load_plugin_config('codeium'),
@@ -31,6 +32,7 @@ local plugins = {
     load_plugin_config('opencode'),
     load_plugin_config('markview'),
     load_plugin_config('nvim-tree'),
+    load_plugin_config('snacks'),
 }
 
 function M.init()

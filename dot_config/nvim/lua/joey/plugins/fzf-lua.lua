@@ -6,6 +6,7 @@ return {
         vim.keymap.set("n", "<leader>ff", function() fzf.files() end)
         vim.keymap.set("n", "<leader>gg", function() fzf.live_grep() end)
         vim.keymap.set("n", "<leader>gf", function() fzf.grep_project() end)
+        vim.keymap.set("n", "<leader>fb", function() fzf.buffers() end)
 
         fzf.setup({
             keymap = {

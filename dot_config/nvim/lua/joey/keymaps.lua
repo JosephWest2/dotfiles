@@ -31,7 +31,10 @@ function M.init()
     vim.keymap.set("n", "<C-,>", vim.lsp.buf.code_action)
 
     -- rename using lsp
-    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename)
+    vim.keymap.set("n", "<leader>rn", function()
+        vim.lsp.buf.rename()
+        vim.cmd('silent! wa')
+    end)
 
     -- format using lsp
     vim.keymap.set("n", "<leader>fm", vim.lsp.buf.format)
