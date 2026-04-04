@@ -1,0 +1,22 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 28,
+    "spacing": 0,
+
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": [],
+    "modules-right": [],
+
+    "hyprland/workspaces": {
+        "format": "{id} {windows}",
+        "format-window-separator": " · ",
+        "window-rewrite-default": "{title}",
+        "window-rewrite": {
+            "title<.*>": "{title}"
+        },
+        "on-click": "activate",
+        "sort-by-number": true,
+        "active-only": false
+    }
+}
