@@ -20,8 +20,8 @@ function M.init()
     vim.keymap.set("n", "<leader>hl", ":set hlsearch! hlsearch?<CR>")
 
     -- give the same keybinds to get out of terminal
-    vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]])
-    vim.keymap.set("t", "<C-[>", [[<C-\><C-n>]])
+--    vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]])
+ --   vim.keymap.set("t", "<C-[>", [[<C-\><C-n>]])
 
     -- next and previous quickfix list keybinds
     vim.keymap.set("n", "<A-j>", ":cnext<CR>")
