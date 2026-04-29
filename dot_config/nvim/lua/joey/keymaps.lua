@@ -28,7 +28,7 @@ function M.init()
     vim.keymap.set("n", "<A-k>", ":cprev<CR>")
 
     -- lsp code action
-    vim.keymap.set("n", "<C-,>", vim.lsp.buf.code_action)
+    vim.keymap.set("n", "<C-.>", vim.lsp.buf.code_action)
 
     -- rename using lsp
     vim.keymap.set("n", "<leader>rn", function()

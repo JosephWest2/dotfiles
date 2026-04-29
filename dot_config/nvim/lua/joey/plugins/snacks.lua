@@ -8,21 +8,12 @@ return {
         -- or leave it empty to use the default settings
         -- refer to the configuration section below
         indent = {
-            enabled = true, animate = {
+            enabled = false, animate = {
                  enabled = false
             },
         },
         notifier = {
             enabled = true
-        },
-        scroll = {
-            enabled = true,
-            animate = {
-                duration = {
-                    step = 10,
-                    total = 100 
-                }
-            }
         }
     }
 }

@@ -1,17 +1,11 @@
 return {
     'nvim-treesitter/nvim-treesitter',
+    branch = "main",
+    build = ":TSUpdate",
     config = function()
-        require('nvim-treesitter.configs').setup {
-            sync_install = false,
-            auto_install = true,
-            highlight = {
-                enable = true,
-                additional_vim_regex_highlighting = false,
-            }
-        }
-
-        --vim.api.nvim_set_hl(0, "@tag.jsx", { fg = "#61afef", bold = false }) -- HTML-like tags in JSX (e.g. <div>)
-        --vim.api.nvim_set_hl(0, "@tag.tsx", { fg = "#61afef", bold = false }) -- HTML-like tags in TSX
+        vim.api.nvim_create_autocmd("FileType", {
+            callback = function() pcall(vim.treesitter.start) end,
+        })
     end,
     lazy = false
 }
