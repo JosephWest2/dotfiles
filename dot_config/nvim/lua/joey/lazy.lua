@@ -9,7 +9,7 @@ end
 local plugins = {
     --load_plugin_config('autoclose'),
     load_plugin_config('autopairs'),
-    --load_plugin_config('treesitter'),
+    load_plugin_config('treesitter'),
     load_plugin_config('fzf-lua'),
     load_plugin_config('auto-save'),
     --load_plugin_config('onedark'),
@@ -34,6 +34,7 @@ local plugins = {
     load_plugin_config('markview'),
     load_plugin_config('nvim-tree'),
     load_plugin_config('snacks'),
+    load_plugin_config('nvim-scrollbar'),
 }
 
 function M.init()

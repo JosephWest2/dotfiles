@@ -7,6 +7,6 @@ config.window_close_confirmation = 'AlwaysPrompt'
 config.color_scheme = 'OneHalfDark'
 config.default_cursor_style = 'SteadyBlock'
 config.font = wezterm.font('CommitMonoNerdFontMono')
-config.font_size = 13
+config.font_size = 12
 
 return config
