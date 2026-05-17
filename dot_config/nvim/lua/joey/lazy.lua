@@ -9,7 +9,7 @@ end
 local plugins = {
     --load_plugin_config('autoclose'),
     load_plugin_config('autopairs'),
-    load_plugin_config('treesitter'),
+    --load_plugin_config('treesitter'),
     load_plugin_config('fzf-lua'),
     load_plugin_config('auto-save'),
     --load_plugin_config('onedark'),
