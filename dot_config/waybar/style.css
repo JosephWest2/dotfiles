@@ -46,7 +46,7 @@ button:hover {
 
 /* you can set a style on hover for any module like this */
 #pulseaudio:hover {
-    background-color: #a37800;
+    background-color: #525d6e;
 }
 
 #workspaces button {
@@ -95,6 +95,18 @@ button:hover {
 #mpd {
     padding: 0 10px;
     color: #ffffff;
+    border: 1px solid #45475a;
+}
+
+#memory:hover {
+    background-color: #525d6e;
+}
+#cpu:hover {
+    background-color: #525d6e;
+}
+
+#clock:hover {
+    background-color: #525d6e;
 }
 
 #window,
@@ -112,9 +124,6 @@ button:hover {
     margin-right: 0;
 }
 
-#clock {
-    background-color: #64727D;
-}
 
 #battery {
     background-color: #ffffff;
@@ -167,15 +176,6 @@ label:focus {
     background-color: #000000;
 }
 
-#cpu {
-    background-color: #2ecc71;
-    color: #000000;
-}
-
-#memory {
-    background-color: #9b59b6;
-}
-
 #disk {
     background-color: #964B00;
 }
@@ -184,17 +184,8 @@ label:focus {
     background-color: #90b1b1;
 }
 
-#network {
-    background-color: #2980b9;
-}
-
 #network.disconnected {
     background-color: #f53c3c;
-}
-
-#pulseaudio {
-    background-color: #f1c40f;
-    color: #000000;
 }
 
 #pulseaudio.muted {

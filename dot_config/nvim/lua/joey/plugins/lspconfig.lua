@@ -17,5 +17,18 @@ return {
             },
           },
         })
+        vim.lsp.config("basedpyright", {
+            capabilities = capabilities,
+            settings = {
+                basedpyright = {
+                    analysis = {
+                        typeCheckingMode = "basic",
+                        autoSearchPaths = true,
+                        useLibraryCodeForTypes = true,
+                        diagnosticMode = "workspace",
+                    },
+                },
+            },
+        })
     end
 }
