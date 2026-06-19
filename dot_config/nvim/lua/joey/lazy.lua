@@ -35,6 +35,8 @@ local plugins = {
     load_plugin_config('nvim-tree'),
     load_plugin_config('snacks'),
     load_plugin_config('nvim-scrollbar'),
+    load_plugin_config('vim-razor'),
+    load_plugin_config('roslyn'),
 }
 
 function M.init()
