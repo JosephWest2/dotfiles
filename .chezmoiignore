@@ -1,7 +1,11 @@
     dot_config/private_fish/conf.d/antropic-api.fish 
+    dot_config/private_fish/conf.d/fnm.fish 
     .codex/skills/.system/
     .codex/skills/.system/**
 {{- if ne .chezmoi.hostname "joeyarchlinux" }}
+    **/*archlinux*
+    *archlinux*
+    dot_config/private_fish/conf.d/conda-archlinux.fish
     private_dot_local/private_share/applications/zen-private.desktop
     private
 {{- end}}

@@ -30,5 +30,9 @@ return {
                 },
             },
         })
+        vim.lsp.config("mdx_analyzer", {
+            filetypes = { "mdx" },
+            root_markers = { "package.json" },
+        })
     end
 }
