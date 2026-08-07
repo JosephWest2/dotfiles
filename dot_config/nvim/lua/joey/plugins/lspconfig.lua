@@ -30,6 +30,15 @@ return {
                 },
             },
         })
+        vim.lsp.config("intelephense", {
+            settings = {
+                intelephense = {
+                    files = {
+                        maxSize = 5000000,
+                    },
+                },
+            },
+        })
         vim.lsp.config("mdx_analyzer", {
             filetypes = { "mdx" },
             root_markers = { "package.json" },
