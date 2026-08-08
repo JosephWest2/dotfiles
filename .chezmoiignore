@@ -12,6 +12,7 @@ tests/
 
 {{- if ne .chezmoi.hostname "joeyarchlinux" }}
 .config/hypr/
+.config/vocalinux/
 .config/waybar/
 .config/fish/conf.d/conda-archlinux.fish
 .config/fish/conf.d/dotnet.fish

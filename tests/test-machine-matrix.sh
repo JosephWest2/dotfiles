@@ -96,11 +96,13 @@ check_workspace_configs() {
     local hyprland
     local letter
     local upper
+    local vocalinux
     local waybar
     local workspace
 
     aerospace=$(<"$repo_dir/dot_config/aerospace/aerospace.toml")
     hyprland=$(<"$repo_dir/dot_config/hypr/hyprland.lua")
+    vocalinux=$(<"$repo_dir/dot_config/vocalinux/private_config.json")
     waybar=$(<"$repo_dir/dot_config/waybar/config.jsonc")
 
     for letter in {a..z}; do
@@ -144,6 +146,8 @@ check_workspace_configs() {
     assert_contains "$hyprland" 'hl.bind(mainMod .. " + CTRL + SHIFT + " .. upperLetter' "hyprland uppercase workspace move"
     assert_contains "$hyprland" 'hl.bind(mainMod .. " + left"' "hyprland arrow focus"
     assert_contains "$hyprland" 'hl.bind(mainMod .. " + CTRL + left"' "hyprland arrow swap"
+    assert_contains "$vocalinux" '"toggle_recognition": "right_alt+right_alt"' "vocalinux right Alt shortcut"
+    assert_contains "$vocalinux" '"mode": "push_to_talk"' "vocalinux push-to-talk mode"
     assert_contains "$waybar" "<span color='#ff4f4f'>{name}</span>" "waybar named workspaces"
 }
 
@@ -188,6 +192,7 @@ check_profile() {
     case "$profile" in
         wet-leg)
             assert_ignored "$ignored" ".config/hypr" "$profile"
+            assert_ignored "$ignored" ".config/vocalinux" "$profile"
             assert_ignored "$ignored" ".config/waybar" "$profile"
             assert_ignored "$ignored" ".local/share/applications/zen-private.desktop" "$profile"
             assert_ignored "$ignored" ".config/fish/conf.d/conda-archlinux.fish" "$profile"
@@ -200,6 +205,7 @@ check_profile() {
             ;;
         MacBookAir)
             assert_ignored "$ignored" ".config/hypr" "$profile"
+            assert_ignored "$ignored" ".config/vocalinux" "$profile"
             assert_ignored "$ignored" ".config/waybar" "$profile"
             assert_ignored "$ignored" ".local/share/applications/zen-private.desktop" "$profile"
             assert_ignored "$ignored" ".config/fish/conf.d/conda-archlinux.fish" "$profile"
@@ -213,6 +219,7 @@ check_profile() {
             ;;
         joeyarchlinux)
             assert_included "$ignored" ".config/hypr" "$profile"
+            assert_included "$ignored" ".config/vocalinux" "$profile"
             assert_included "$ignored" ".config/waybar" "$profile"
             assert_included "$ignored" ".local/share/applications/zen-private.desktop" "$profile"
             assert_included "$ignored" ".config/fish/conf.d/conda-archlinux.fish" "$profile"

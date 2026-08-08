@@ -10,7 +10,7 @@ Chezmoi's `.chezmoi.hostname` is the short hostname, up to the first dot.
 | --- | --- | --- | --- |
 | Work macOS | `wet-leg.local` | `wet-leg` | AeroSpace and the Zsh Lando path |
 | Personal macOS | `MacBookAir.ht.home` | `MacBookAir` | AeroSpace and larger Kitty sizing |
-| Personal Arch Linux | `joeyarchlinux` | `joeyarchlinux` | Hyprland, Waybar, Zen desktop entry, Conda, Linux .NET certificates, and Wayland settings |
+| Personal Arch Linux | `joeyarchlinux` | `joeyarchlinux` | Hyprland, Waybar, Vocalinux, Zen desktop entry, Conda, Linux .NET certificates, and Wayland settings |
 
 Zsh, Fish, Kitty, WezTerm, tmux, Neovim, Yazi, Codex skills, opencode, and clang-format are shared by all three machines. Optional shell integrations are guarded so a missing tool does not break shell startup.
 
@@ -18,7 +18,7 @@ Zsh, Fish, Kitty, WezTerm, tmux, Neovim, Yazi, Codex skills, opencode, and clang
 
 - `.chezmoiignore` entries are target-relative paths such as `.config/hypr`, not source-state names such as `dot_config/hypr`.
 - AeroSpace is managed on Darwin hosts.
-- The Linux desktop stack and its Fish fragments are managed only on `joeyarchlinux`.
+- The Linux desktop stack, Vocalinux configuration, and Arch-specific Fish fragments are managed only on `joeyarchlinux`.
 - Unknown hosts receive shared configuration but do not receive the Arch desktop stack.
 
 Run the machine-matrix smoke test after changing an ignore rule or template condition:

@@ -1,0 +1,39 @@
+{
+    "speech_recognition": {
+        "engine": "whisper_cpp",
+        "language": "en-us",
+        "model_size": "small",
+        "vosk_model_size": "small",
+        "whisper_model_size": "tiny",
+        "whisper_cpp_model_size": "small",
+        "vad_sensitivity": 3,
+        "silence_timeout": 2.0,
+        "voice_commands_enabled": null
+    },
+    "audio": {
+        "device_index": null,
+        "device_name": null
+    },
+    "sound_effects": {
+        "enabled": true
+    },
+    "shortcuts": {
+        "toggle_recognition": "right_alt+right_alt",
+        "mode": "push_to_talk"
+    },
+    "ui": {
+        "start_minimized": false,
+        "show_notifications": true
+    },
+    "general": {
+        "autostart": true,
+        "first_run": false
+    },
+    "text_injection": {
+        "copy_to_clipboard": false
+    },
+    "advanced": {
+        "debug_logging": false,
+        "wayland_mode": false
+    }
+}
