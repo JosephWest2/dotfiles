@@ -70,9 +70,14 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-syntax-highlighting)
+plugins=(git)
+if [[ -d "${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-syntax-highlighting" ]]; then
+    plugins+=(zsh-syntax-highlighting)
+fi
 
-source $ZSH/oh-my-zsh.sh
+if [[ -s "$ZSH/oh-my-zsh.sh" ]]; then
+    source "$ZSH/oh-my-zsh.sh"
+fi
 
 # User configuration
 
@@ -127,8 +132,12 @@ function ghc() {
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
-eval "$(zoxide init zsh --cmd cd)"
+if command -v zoxide >/dev/null 2>&1; then
+    eval "$(zoxide init zsh --cmd cd)"
+fi
 
-export PATH="/Users/joseph.west/.lando/bin:$PATH"; #landopath
+{{ if eq .chezmoi.hostname "wet-leg" -}}
+export PATH="/Users/joseph.west/.lando/bin:$PATH" # Lando on the work Mac
+{{ end -}}
 
 export PATH="$HOME/bin:$PATH"

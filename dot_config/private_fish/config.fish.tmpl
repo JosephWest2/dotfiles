@@ -1,0 +1,13 @@
+if status is-interactive
+    bind \cy 'commandline -f accept-autosuggestion'
+    export EDITOR=nvim
+{{- if eq .chezmoi.hostname "joeyarchlinux" }}
+    set --global --export SDL_VIDEODRIVER wayland
+{{- end }}
+end
+
+# bun
+set --export BUN_INSTALL "$HOME/.bun"
+if test -d "$BUN_INSTALL/bin"
+    fish_add_path --global --move "$BUN_INSTALL/bin"
+end
