@@ -92,10 +92,12 @@ render_source() {
 
 check_workspace_configs() {
     local aerospace
+    local digit
     local hyprland
     local letter
     local upper
     local waybar
+    local workspace
 
     aerospace=$(<"$repo_dir/dot_config/aerospace/aerospace.toml")
     hyprland=$(<"$repo_dir/dot_config/hypr/hyprland.lua")
@@ -109,11 +111,34 @@ check_workspace_configs() {
         assert_contains "$aerospace" "alt-ctrl-shift-$letter = 'move-node-to-workspace $upper'" "aerospace uppercase move $upper"
     done
 
+    for workspace in {1..10}; do
+        digit=$((workspace % 10))
+        assert_contains "$aerospace" "alt-ctrl-$digit = 'move-node-to-workspace $workspace'" "aerospace numbered move $workspace"
+        assert_not_contains "$aerospace" "alt-shift-$digit = 'move-node-to-workspace $workspace'" "aerospace old numbered move $workspace"
+    done
+
+    assert_not_contains "$aerospace" '[workspace-to-monitor-force-assignment]' "aerospace forced workspace monitor assignments"
+    assert_contains "$aerospace" "alt-cmd-1 = 'move-workspace-to-monitor main'" "aerospace move workspace left"
+    assert_contains "$aerospace" "alt-cmd-2 = 'move-workspace-to-monitor secondary'" "aerospace move workspace right"
+    assert_not_contains "$aerospace" "alt-shift-tab = 'move-workspace-to-monitor" "aerospace old monitor cycle binding"
+
     assert_contains "$hyprland" 'hl.exec_cmd("wezterm", { workspace = "name:t silent" })' "hyprland wezterm workspace"
     assert_contains "$hyprland" 'hl.exec_cmd("google-chrome-stable", { workspace = "name:b silent" })' "hyprland chrome workspace"
     assert_contains "$hyprland" 'hl.dispatch(hl.dsp.focus({ workspace = "name:t" }))' "hyprland startup workspace"
-    assert_contains "$hyprland" 'hl.workspace_rule({ workspace = "name:b", monitor = "HDMI-A-1", default = true })' "hyprland default browser workspace"
+    assert_contains "$hyprland" 'left = "HDMI-A-1"' "hyprland left monitor"
+    assert_contains "$hyprland" 'right = "DP-1"' "hyprland right monitor"
+    assert_contains "$hyprland" 'output = monitors.left' "hyprland left monitor reference"
+    assert_contains "$hyprland" 'output = monitors.right' "hyprland right monitor reference"
+    assert_contains "$hyprland" 'hl.workspace_rule({ workspace = "name:b", monitor = monitors.left, default = true })' "hyprland default browser workspace"
     assert_not_contains "$hyprland" 'hl.exec_cmd("firefox"' "hyprland autostart"
+    assert_contains "$hyprland" 'hl.bind(mainMod .. " + ALT + Q", hl.dsp.window.signal({ signal = 15 }))' "hyprland quit application"
+    assert_contains "$hyprland" 'hl.bind(mainMod .. " + ALT + W", hl.dsp.window.close())' "hyprland close window"
+    assert_not_contains "$hyprland" 'hl.bind(mainMod .. " + ALT + Q", hl.dsp.window.close())' "hyprland old close window binding"
+    assert_contains "$hyprland" 'hl.bind(mainMod .. " + CTRL + " .. key, hl.dsp.window.move({ workspace = i }))' "hyprland numbered workspace move"
+    assert_not_contains "$hyprland" 'on_current_monitor = true' "hyprland old current monitor workspace binding"
+    assert_not_contains "$hyprland" 'hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))' "hyprland old numbered workspace move"
+    assert_contains "$hyprland" 'hl.bind(mainMod .. " + ALT + 1", hl.dsp.workspace.move({ monitor = monitors.left }))' "hyprland move workspace left"
+    assert_contains "$hyprland" 'hl.bind(mainMod .. " + ALT + 2", hl.dsp.workspace.move({ monitor = monitors.right }))' "hyprland move workspace right"
     assert_contains "$hyprland" 'local workspaceLetters = "abcdefghijklmnopqrstuvwxyz"' "hyprland letter workspaces"
     assert_contains "$hyprland" 'hl.bind(mainMod .. " + SHIFT + " .. upperLetter' "hyprland uppercase workspace binding"
     assert_contains "$hyprland" 'hl.bind(mainMod .. " + CTRL + SHIFT + " .. upperLetter' "hyprland uppercase workspace move"

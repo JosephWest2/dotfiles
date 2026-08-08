@@ -33,6 +33,36 @@ Before applying changes on a machine, inspect them with:
 chezmoi apply --dry-run --verbose
 ```
 
+## Workspace keybindings
+
+Hyprland uses `Super` as its main workspace modifier; AeroSpace uses `Alt`. Number key `0` targets workspace 10. Letter workspace names are case-sensitive.
+
+| Action | Hyprland (Arch) | AeroSpace (macOS) |
+| --- | --- | --- |
+| Switch to numbered workspace | `Super + 1–9/0` | `Alt + 1–9/0` |
+| Switch to lowercase workspace | `Super + a–z` | `Alt + a–z` |
+| Switch to uppercase workspace | `Super + Shift + A–Z` | `Alt + Shift + A–Z` |
+| Move window to numbered workspace | `Super + Ctrl + 1–9/0` | `Alt + Ctrl + 1–9/0` |
+| Move window to lowercase workspace | `Super + Ctrl + a–z` | `Alt + Ctrl + a–z` |
+| Move window to uppercase workspace | `Super + Ctrl + Shift + A–Z` | `Alt + Ctrl + Shift + A–Z` |
+| Move current workspace to left monitor | `Super + Alt + 1` | `Alt + Cmd + 1` |
+| Move current workspace to right monitor | `Super + Alt + 2` | `Alt + Cmd + 2` |
+| Switch to previous workspace | — | `Alt + Tab` |
+| Cycle through existing workspaces | `Super + mouse wheel` | — |
+| Toggle the `magic` scratchpad | `Super + Alt + S` | — |
+| Move window to the `magic` scratchpad | `Super + Alt + Shift + S` | — |
+
+On Arch, the left monitor is the secondary `HDMI-A-1` output and the right monitor is the primary `DP-1` output. On the work Mac, the left monitor is the main laptop display and the right monitor is the secondary display.
+
+### Hyprland application and window controls
+
+| Action | Keybinding |
+| --- | --- |
+| Quit the focused application process with `SIGTERM` | `Super + Alt + Q` |
+| Gracefully close the focused window | `Super + Alt + W` |
+
+`SIGTERM` asks the focused window's owning process to terminate, but applications may still exit without presenting an unsaved-work prompt.
+
 ## One-time cleanup after the matrix fix
 
 Correcting `.chezmoiignore` stops managing a wrong-host file but does not remove a copy that was applied previously. Back up and remove only the following paths after confirming they are stale:

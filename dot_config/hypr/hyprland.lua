@@ -6,15 +6,20 @@
 ------------------
 
 -- See https://wiki.hypr.land/Configuring/Basics/Monitors/
+local monitors = {
+    left = "HDMI-A-1",
+    right = "DP-1",
+}
+
 hl.monitor({
-    output = "DP-1",
+    output = monitors.right,
     mode = "preferred",
     position = "auto",
     scale = 1,
 })
 
 hl.monitor({
-    output = "HDMI-A-1",
+    output = monitors.left,
     mode = "2560x1440@120",
     position = "auto-left",
     scale = 1,
@@ -210,7 +215,8 @@ local mainMod = "SUPER"
 
 hl.bind(mainMod .. " + return", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + ALT + C", hl.dsp.exec_cmd([[hyprpicker | tee >(wl-copy) | { text=$(cat); notify-send "Copied color to clipboard: $text"; echo "$text" | wl-copy --primary; }]]))
-hl.bind(mainMod .. " + ALT + Q", hl.dsp.window.close())
+hl.bind(mainMod .. " + ALT + Q", hl.dsp.window.signal({ signal = 15 }))
+hl.bind(mainMod .. " + ALT + W", hl.dsp.window.close())
 hl.bind(mainMod .. " + ALT + M", hl.dsp.exit())
 hl.bind(mainMod .. " + ALT + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + ALT + V", hl.dsp.window.float())
@@ -237,10 +243,13 @@ hl.bind(mainMod .. " + CTRL + down", hl.dsp.window.swap({ direction = "d" }))
 -- Focus, switch to, or move windows to workspaces 1-10.
 for i = 1, 10 do
     local key = i % 10
-    hl.bind(mainMod .. " + CTRL + " .. key, hl.dsp.focus({ workspace = i, on_current_monitor = true }))
     hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
-    hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+    hl.bind(mainMod .. " + CTRL + " .. key, hl.dsp.window.move({ workspace = i }))
 end
+
+-- Move the current workspace to the left or right monitor.
+hl.bind(mainMod .. " + ALT + 1", hl.dsp.workspace.move({ monitor = monitors.left }))
+hl.bind(mainMod .. " + ALT + 2", hl.dsp.workspace.move({ monitor = monitors.right }))
 
 -- Switch to or move windows to case-sensitive letter workspaces a-z and A-Z.
 local workspaceLetters = "abcdefghijklmnopqrstuvwxyz"
@@ -288,7 +297,7 @@ hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), lockedBindOption
 ---- WINDOWS AND WORKSPACES ----
 --------------------------------
 
-hl.workspace_rule({ workspace = "name:b", monitor = "HDMI-A-1", default = true })
+hl.workspace_rule({ workspace = "name:b", monitor = monitors.left, default = true })
 
 -- See https://wiki.hypr.land/Configuring/Basics/Window-Rules/
 hl.window_rule({
