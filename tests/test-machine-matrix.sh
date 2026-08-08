@@ -90,6 +90,38 @@ render_source() {
         --file "$repo_dir/$source_file"
 }
 
+check_workspace_configs() {
+    local aerospace
+    local hyprland
+    local letter
+    local upper
+    local waybar
+
+    aerospace=$(<"$repo_dir/dot_config/aerospace/aerospace.toml")
+    hyprland=$(<"$repo_dir/dot_config/hypr/hyprland.lua")
+    waybar=$(<"$repo_dir/dot_config/waybar/config.jsonc")
+
+    for letter in {a..z}; do
+        upper=$(printf '%s' "$letter" | tr '[:lower:]' '[:upper:]')
+        assert_contains "$aerospace" "alt-$letter = 'workspace $letter'" "aerospace lowercase workspace $letter"
+        assert_contains "$aerospace" "alt-shift-$letter = 'workspace $upper'" "aerospace uppercase workspace $upper"
+        assert_contains "$aerospace" "alt-ctrl-$letter = 'move-node-to-workspace $letter'" "aerospace lowercase move $letter"
+        assert_contains "$aerospace" "alt-ctrl-shift-$letter = 'move-node-to-workspace $upper'" "aerospace uppercase move $upper"
+    done
+
+    assert_contains "$hyprland" 'hl.exec_cmd("wezterm", { workspace = "name:t silent" })' "hyprland wezterm workspace"
+    assert_contains "$hyprland" 'hl.exec_cmd("google-chrome-stable", { workspace = "name:b silent" })' "hyprland chrome workspace"
+    assert_contains "$hyprland" 'hl.dispatch(hl.dsp.focus({ workspace = "name:t" }))' "hyprland startup workspace"
+    assert_contains "$hyprland" 'hl.workspace_rule({ workspace = "name:b", monitor = "HDMI-A-1", default = true })' "hyprland default browser workspace"
+    assert_not_contains "$hyprland" 'hl.exec_cmd("firefox"' "hyprland autostart"
+    assert_contains "$hyprland" 'local workspaceLetters = "abcdefghijklmnopqrstuvwxyz"' "hyprland letter workspaces"
+    assert_contains "$hyprland" 'hl.bind(mainMod .. " + SHIFT + " .. upperLetter' "hyprland uppercase workspace binding"
+    assert_contains "$hyprland" 'hl.bind(mainMod .. " + CTRL + SHIFT + " .. upperLetter' "hyprland uppercase workspace move"
+    assert_contains "$hyprland" 'hl.bind(mainMod .. " + left"' "hyprland arrow focus"
+    assert_contains "$hyprland" 'hl.bind(mainMod .. " + CTRL + left"' "hyprland arrow swap"
+    assert_contains "$waybar" "<span color='#ff4f4f'>{name}</span>" "waybar named workspaces"
+}
+
 check_profile() {
     local profile=$1
     local data
@@ -175,6 +207,7 @@ check_profile() {
 command -v chezmoi >/dev/null 2>&1 || fail "chezmoi is required"
 [[ ! -e "$repo_dir/dot_config/kitty/kitty.conf.bak" ]] || fail "kitty.conf.bak must not be managed"
 
+check_workspace_configs
 check_profile wet-leg
 check_profile MacBookAir
 check_profile joeyarchlinux

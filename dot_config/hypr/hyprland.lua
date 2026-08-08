@@ -41,8 +41,9 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("hyprctl setcursor Bibata-Original-Classic 24")
     hl.exec_cmd("waybar")
 
-    hl.exec_cmd("wezterm", { workspace = "1 silent" })
-    hl.exec_cmd("firefox", { workspace = "2 silent" })
+    hl.exec_cmd("wezterm", { workspace = "name:t silent" })
+    hl.exec_cmd("google-chrome-stable", { workspace = "name:b silent" })
+    hl.dispatch(hl.dsp.focus({ workspace = "name:t" }))
 end)
 
 -------------------------------
@@ -208,30 +209,30 @@ hl.device({
 local mainMod = "SUPER"
 
 hl.bind(mainMod .. " + return", hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + C", hl.dsp.exec_cmd([[hyprpicker | tee >(wl-copy) | { text=$(cat); notify-send "Copied color to clipboard: $text"; echo "$text" | wl-copy --primary; }]]))
-hl.bind(mainMod .. " + Q", hl.dsp.window.close())
-hl.bind(mainMod .. " + M", hl.dsp.exit())
-hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
-hl.bind(mainMod .. " + V", hl.dsp.window.float())
+hl.bind(mainMod .. " + ALT + C", hl.dsp.exec_cmd([[hyprpicker | tee >(wl-copy) | { text=$(cat); notify-send "Copied color to clipboard: $text"; echo "$text" | wl-copy --primary; }]]))
+hl.bind(mainMod .. " + ALT + Q", hl.dsp.window.close())
+hl.bind(mainMod .. " + ALT + M", hl.dsp.exit())
+hl.bind(mainMod .. " + ALT + E", hl.dsp.exec_cmd(fileManager))
+hl.bind(mainMod .. " + ALT + V", hl.dsp.window.float())
 hl.bind(mainMod .. " + space", hl.dsp.exec_cmd(menu))
-hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
-hl.bind(mainMod .. " + O", hl.dsp.layout("togglesplit"))
-hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("loginctl lock-session"))
+hl.bind(mainMod .. " + ALT + P", hl.dsp.window.pseudo())
+hl.bind(mainMod .. " + ALT + O", hl.dsp.layout("togglesplit"))
+hl.bind(mainMod .. " + ALT + SHIFT + L", hl.dsp.exec_cmd("loginctl lock-session"))
 
 hl.bind(mainMod .. " + bracketright", hl.dsp.exec_cmd("~/.config/hypr/scripts/nerd-dictation-toggle.sh"))
 hl.bind("Print", hl.dsp.exec_cmd("hyprshot -m region -o ~/Images"))
 
--- Move focus with mainMod + vim direction keys.
-hl.bind(mainMod .. " + h", hl.dsp.focus({ direction = "l" }))
-hl.bind(mainMod .. " + l", hl.dsp.focus({ direction = "r" }))
-hl.bind(mainMod .. " + k", hl.dsp.focus({ direction = "u" }))
-hl.bind(mainMod .. " + j", hl.dsp.focus({ direction = "d" }))
+-- Move focus with mainMod + arrow keys.
+hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "l" }))
+hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "r" }))
+hl.bind(mainMod .. " + up", hl.dsp.focus({ direction = "u" }))
+hl.bind(mainMod .. " + down", hl.dsp.focus({ direction = "d" }))
 
 -- Move windows.
-hl.bind(mainMod .. " + CTRL + l", hl.dsp.window.swap({ direction = "r" }))
-hl.bind(mainMod .. " + CTRL + h", hl.dsp.window.swap({ direction = "l" }))
-hl.bind(mainMod .. " + CTRL + k", hl.dsp.window.swap({ direction = "u" }))
-hl.bind(mainMod .. " + CTRL + j", hl.dsp.window.swap({ direction = "d" }))
+hl.bind(mainMod .. " + CTRL + right", hl.dsp.window.swap({ direction = "r" }))
+hl.bind(mainMod .. " + CTRL + left", hl.dsp.window.swap({ direction = "l" }))
+hl.bind(mainMod .. " + CTRL + up", hl.dsp.window.swap({ direction = "u" }))
+hl.bind(mainMod .. " + CTRL + down", hl.dsp.window.swap({ direction = "d" }))
 
 -- Focus, switch to, or move windows to workspaces 1-10.
 for i = 1, 10 do
@@ -241,9 +242,23 @@ for i = 1, 10 do
     hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
 
+-- Switch to or move windows to case-sensitive letter workspaces a-z and A-Z.
+local workspaceLetters = "abcdefghijklmnopqrstuvwxyz"
+for i = 1, #workspaceLetters do
+    local lowerLetter = workspaceLetters:sub(i, i)
+    local upperLetter = lowerLetter:upper()
+    local lowerWorkspace = "name:" .. lowerLetter
+    local upperWorkspace = "name:" .. upperLetter
+
+    hl.bind(mainMod .. " + " .. lowerLetter, hl.dsp.focus({ workspace = lowerWorkspace }))
+    hl.bind(mainMod .. " + SHIFT + " .. upperLetter, hl.dsp.focus({ workspace = upperWorkspace }))
+    hl.bind(mainMod .. " + CTRL + " .. lowerLetter, hl.dsp.window.move({ workspace = lowerWorkspace }))
+    hl.bind(mainMod .. " + CTRL + SHIFT + " .. upperLetter, hl.dsp.window.move({ workspace = upperWorkspace }))
+end
+
 -- Special workspace (scratchpad).
-hl.bind(mainMod .. " + S", hl.dsp.workspace.toggle_special("magic"))
-hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
+hl.bind(mainMod .. " + ALT + S", hl.dsp.workspace.toggle_special("magic"))
+hl.bind(mainMod .. " + ALT + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
 
 -- Scroll through existing workspaces.
 hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
@@ -272,6 +287,8 @@ hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), lockedBindOption
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----
 --------------------------------
+
+hl.workspace_rule({ workspace = "name:b", monitor = "HDMI-A-1", default = true })
 
 -- See https://wiki.hypr.land/Configuring/Basics/Window-Rules/
 hl.window_rule({

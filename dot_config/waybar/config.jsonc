@@ -55,7 +55,7 @@
     },
 
     "hyprland/workspaces": {
-        "format": "<span color='#ff4f4f'>{id}</span> {windows}",
+        "format": "<span color='#ff4f4f'>{name}</span> {windows}",
         "format-window-separator": " · ",
         "window-rewrite-default": "{title}",
         "window-rewrite": {
