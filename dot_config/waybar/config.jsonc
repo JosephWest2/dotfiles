@@ -11,8 +11,12 @@
         "cpu",
         "memory",
         "network",
-        "pulseaudio"
+        "pulseaudio",
+        "tray"
     ],
+    "tray": {
+        "spacing": 4
+    },
     "clock": {
         "interval": 60,
         "format": "{:%m-%d-%y %H:%M}",

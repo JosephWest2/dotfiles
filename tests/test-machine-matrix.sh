@@ -149,6 +149,8 @@ check_workspace_configs() {
     assert_contains "$vocalinux" '"toggle_recognition": "right_alt+right_alt"' "vocalinux right Alt shortcut"
     assert_contains "$vocalinux" '"mode": "push_to_talk"' "vocalinux push-to-talk mode"
     assert_contains "$waybar" "<span color='#ff4f4f'>{name}</span>" "waybar named workspaces"
+    assert_contains "$waybar" '"tray"' "waybar system tray"
+    assert_contains "$waybar" '"spacing": 4' "waybar tray icon spacing"
 }
 
 check_profile() {
