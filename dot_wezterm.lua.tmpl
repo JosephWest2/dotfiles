@@ -1,0 +1,82 @@
+local wezterm = require('wezterm')
+local config = wezterm.config_builder() 
+
+config.hide_tab_bar_if_only_one_tab = true
+config.window_close_confirmation = 'AlwaysPrompt'
+
+config.color_scheme = 'OneHalfDark'
+config.default_cursor_style = 'SteadyBlock'
+{{- if eq .chezmoi.os "darwin" }}
+config.font = wezterm.font('CommitMono Nerd Font Mono')
+{{- else }}
+config.font = wezterm.font('CommitMonoNerdFontMono')
+{{- end }}
+config.font_size = 12
+
+local copy_only = false
+
+config.bypass_mouse_reporting_modifiers = 'SUPER'
+
+config.mouse_bindings = {
+  {
+    event = { Up = { streak = 1, button = 'Left' } },
+    mods = 'SUPER',
+    action = wezterm.action.CompleteSelectionOrOpenLinkAtMouseCursor 'Clipboard',
+  },
+  {
+    event = { Up = { streak = 1, button = 'Right' } },
+    mods = 'SUPER',
+    action = wezterm.action.CompleteSelectionOrOpenLinkAtMouseCursor 'Clipboard',
+  },
+}
+
+wezterm.on('open-uri', function(window, pane, uri)
+  if copy_only then
+    copy_only = false
+    window:copy_to_clipboard(uri, 'Clipboard')
+    return false
+  end
+
+  local event = window:current_event()
+  local button = event and event.Up and event.Up.button
+  if button == 'Right' then
+    window:perform_action(
+      wezterm.action.InputSelector {
+        title = 'Link',
+        choices = {
+          { label = 'Open Link', id = 'open' },
+          { label = 'Copy Link', id = 'copy' },
+        },
+        action = wezterm.action_callback(function(win, _pane, id)
+          if id == 'copy' then
+            win:copy_to_clipboard(uri, 'Clipboard')
+          elseif id == 'open' then
+            wezterm.open_with(uri)
+          end
+        end),
+      },
+      pane
+    )
+    return false
+  end
+end)
+
+config.keys = {}
+for i = 1, 9 do
+    table.insert(config.keys, {
+        key = tostring(i),
+        mods = 'ALT',
+        action = wezterm.action.ActivateTab(i - 1)
+    })
+end
+
+table.insert(config.keys, {
+  key = 'C',
+  mods = 'SUPER|SHIFT',
+  action = wezterm.action_callback(function(window, pane)
+    copy_only = true
+    window:perform_action(wezterm.action.CompleteSelectionOrOpenLinkAtMouseCursor 'Clipboard', pane)
+  end),
+})
+
+return config
