@@ -47,7 +47,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("waybar")
 
     hl.exec_cmd("wezterm", { workspace = "name:t silent" })
-    hl.exec_cmd("google-chrome-stable", { workspace = "name:b silent" })
+    hl.exec_cmd("google-chrome-stable", { workspace = "name:c silent" })
     hl.dispatch(hl.dsp.focus({ workspace = "name:t" }))
 end)
 
@@ -297,7 +297,7 @@ hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), lockedBindOption
 ---- WINDOWS AND WORKSPACES ----
 --------------------------------
 
-hl.workspace_rule({ workspace = "name:b", monitor = monitors.left, default = true })
+hl.workspace_rule({ workspace = "name:c", monitor = monitors.left, default = true })
 
 -- See https://wiki.hypr.land/Configuring/Basics/Window-Rules/
 hl.window_rule({
