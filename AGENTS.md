@@ -27,4 +27,5 @@ Templated files branch on `.chezmoi.hostname` / `.chezmoi.os` to vary behavior p
 - After editing a `dot_*` file, changes aren't live until `chezmoi apply` runs.
 - When adding a machine-specific config, prefer a template conditional over a new file unless the divergence is large.
 - Don't assume a file applies to all three machines — verify against the hostname/os conditionals above.
-- Run `bash tests/test-machine-matrix.sh` after changing machine selection or a host-specific template.
+- Run `bash tests/test-machine-matrix.sh` after changing machine selection or `.chezmoiignore`.
+- Add tests only when they provide meaningful validation beyond restating the current configuration; avoid highly brittle assertions coupled to exact config text or formatting.

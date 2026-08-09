@@ -11,8 +11,8 @@ tests/
 {{- end }}
 
 {{- if ne .chezmoi.hostname "joeyarchlinux" }}
-.config/environment.d/vocalinux.conf
 .config/hypr/
+.config/uwsm/
 .config/vocalinux/
 .config/waybar/
 .config/fish/conf.d/conda-archlinux.fish
