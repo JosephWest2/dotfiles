@@ -79,4 +79,24 @@ table.insert(config.keys, {
   end),
 })
 
+{{- if eq .chezmoi.os "darwin" }}
+table.insert(config.keys, {
+  key = 'Backspace',
+  mods = 'ALT',
+  action = wezterm.action.SendKey { key = 'w', mods = 'CTRL' },
+})
+
+table.insert(config.keys, {
+  key = 'LeftArrow',
+  mods = 'ALT',
+  action = wezterm.action.SendString '\x1bb',
+})
+
+table.insert(config.keys, {
+  key = 'RightArrow',
+  mods = 'ALT',
+  action = wezterm.action.SendString '\x1bf',
+})
+{{- end }}
+
 return config
