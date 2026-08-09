@@ -15,5 +15,3 @@ Follow these coding guidelines:
 - Add or update meaningful tests when appropriate.
 - Run the most relevant available checks and report the results.
 - Do not commit or push changes unless I explicitly ask.
-
-<!-- Add or replace coding guidelines above to customize /code. -->
