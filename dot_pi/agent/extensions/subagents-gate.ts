@@ -26,31 +26,22 @@ export default async function subagentsGate(pi: ExtensionAPI): Promise<void> {
 	// Pi applies extension flag values after extension factories finish loading.
 	// Check argv here because pi-subagents must register before session_start.
 	const enabledByFlag = process.argv.includes("--sub-agents");
-	const enabledByCommand = processState[RELOAD_HANDOFF_KEY] === true;
-	const enabled = enabledByFlag || enabledByCommand;
+	const sessionOverride = processState[RELOAD_HANDOFF_KEY];
+	const enabled = sessionOverride ?? enabledByFlag;
 
-	pi.registerCommand("enable-subagents", {
-		description: "Enable pi-subagents for the current chat",
+	pi.registerCommand("toggle-subagents", {
+		description: "Enable or disable pi-subagents for the current chat",
 		handler: async (_args, ctx) => {
-			if (enabled) {
-				ctx.ui.notify("Subagents are already enabled for this chat.", "info");
-				return;
-			}
-
-			processState[RELOAD_HANDOFF_KEY] = true;
+			const nextEnabled = !enabled;
+			processState[RELOAD_HANDOFF_KEY] = nextEnabled;
+			ctx.ui.notify(`Subagents ${nextEnabled ? "enabled" : "disabled"} for this chat.`, "info");
 			await ctx.reload();
 			return;
 		},
 	});
 
 	pi.on("session_shutdown", (event) => {
-		if (event.reason === "reload") {
-			if (enabled || processState[RELOAD_HANDOFF_KEY] === true) {
-				processState[RELOAD_HANDOFF_KEY] = true;
-			}
-			return;
-		}
-
+		if (event.reason === "reload") return;
 		delete processState[RELOAD_HANDOFF_KEY];
 	});
 
