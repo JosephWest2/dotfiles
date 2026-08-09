@@ -6,6 +6,7 @@
   "defaultThinkingLevel": "medium",
   "packages": [
     "npm:pi-web-access",
-    "npm:@juicesharp/rpiv-ask-user-question"
+    "npm:@juicesharp/rpiv-ask-user-question",
+    "npm:@gotgenes/pi-permission-system@24.0.0"
   ]
 }
