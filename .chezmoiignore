@@ -11,6 +11,7 @@ tests/
 {{- end }}
 
 {{- if ne .chezmoi.hostname "joeyarchlinux" }}
+.config/environment.d/vocalinux.conf
 .config/hypr/
 .config/vocalinux/
 .config/waybar/
