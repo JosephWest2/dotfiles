@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# Re-run when the locked Gondolin dependency tree changes.
+# package-lock.json sha256: {{ include "dot_pi/agent/optional-extensions/gondolin/package-lock.json" | sha256sum }}
+gondolin_dir={{ joinPath .chezmoi.homeDir ".pi" "agent" "optional-extensions" "gondolin" | quote }}
+
+npm ci --ignore-scripts --prefix "$gondolin_dir"
