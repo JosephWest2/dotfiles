@@ -37,6 +37,7 @@ local plugins = {
     load_plugin_config('nvim-scrollbar'),
     load_plugin_config('vim-razor'),
     load_plugin_config('roslyn'),
+    load_plugin_config('freemarker'),
 }
 
 function M.init()
