@@ -137,7 +137,8 @@ if command -v zoxide >/dev/null 2>&1; then
 fi
 
 {{ if eq .chezmoi.hostname "wet-leg" -}}
-export PATH="/Users/joseph.west/.lando/bin:$PATH" # Lando on the work Mac
+export PATH="$HOME/Library/PackageManager/bin:$PATH" # Blade on the work Mac
+export PATH="$HOME/.lando/bin:$PATH" # Lando on the work Mac
 {{ end -}}
 
 export PATH="$HOME/bin:$PATH"
