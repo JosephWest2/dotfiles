@@ -6,10 +6,6 @@
   "defaultThinkingLevel": "medium",
   "packages": [
     "npm:pi-web-access",
-    "npm:@juicesharp/rpiv-ask-user-question",
-    {
-      "source": "npm:pi-subagents@0.44.0",
-      "autoload": false
-    }
+    "npm:@juicesharp/rpiv-ask-user-question"
   ]
 }

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# Chezmoi does not remove a target merely because its source file disappeared.
+rm -f -- {{ joinPath .chezmoi.homeDir ".pi" "agent" "extensions" "subagents-gate.ts" | quote }}
