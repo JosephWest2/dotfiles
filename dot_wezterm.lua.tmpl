@@ -3,6 +3,7 @@ local config = wezterm.config_builder()
 
 config.hide_tab_bar_if_only_one_tab = true
 config.window_close_confirmation = 'AlwaysPrompt'
+config.leader = { key = 'Space', mods = 'CTRL', timeout_milliseconds = 1000 }
 
 config.color_scheme = 'OneHalfDark'
 config.default_cursor_style = 'SteadyBlock'
@@ -77,6 +78,49 @@ table.insert(config.keys, {
     copy_only = true
     window:perform_action(wezterm.action.CompleteSelectionOrOpenLinkAtMouseCursor 'Clipboard', pane)
   end),
+})
+
+table.insert(config.keys, {
+  key = 'f',
+  mods = 'LEADER',
+  action = wezterm.action.ShowLauncherArgs {
+    flags = 'FUZZY|WORKSPACES',
+    title = 'Switch workspace',
+  },
+})
+
+table.insert(config.keys, {
+  key = 'c',
+  mods = 'LEADER',
+  action = wezterm.action.PromptInputLine {
+    description = 'Create or switch to workspace:',
+    action = wezterm.action_callback(function(window, pane, name)
+      if not name or name == '' then
+        return
+      end
+
+      window:perform_action(wezterm.action.SwitchToWorkspace { name = name }, pane)
+    end),
+  },
+})
+
+table.insert(config.keys, {
+  key = 'r',
+  mods = 'LEADER',
+  action = wezterm.action.PromptInputLine {
+    description = 'Rename workspace:',
+    action = wezterm.action_callback(function(window, _pane, name)
+      local current_name = window:active_workspace()
+      if not name or name == '' or name == current_name then
+        return
+      end
+
+      local success, error_message = pcall(wezterm.mux.rename_workspace, current_name, name)
+      if not success then
+        window:toast_notification('Unable to rename workspace', tostring(error_message), nil, 4000)
+      end
+    end),
+  },
 })
 
 {{- if eq .chezmoi.os "darwin" }}
