@@ -1,9 +1,14 @@
 local wezterm = require('wezterm')
 local config = wezterm.config_builder() 
 
-config.hide_tab_bar_if_only_one_tab = true
 config.window_close_confirmation = 'AlwaysPrompt'
 config.leader = { key = 'Space', mods = 'CTRL', timeout_milliseconds = 1000 }
+
+wezterm.on("update-right-status", function(window, pane)
+  local workspace = wezterm.mux.get_active_workspace()
+
+  window:set_right_status(" " .. workspace .. " ")
+end)
 
 config.color_scheme = 'OneHalfDark'
 config.default_cursor_style = 'SteadyBlock'
