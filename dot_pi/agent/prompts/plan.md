@@ -1,9 +1,0 @@
----
-description: Plan code changes without implementing them
-argument-hint: "<change request>"
----
-Create a clear, actionable implementation plan for the following change:
-
-${ARGUMENTS:-No change request was provided. Ask me what I want to change.}
-
-Inspect the relevant code and documentation before planning. Identify affected files, dependencies, risks, edge cases, and appropriate validation or tests. Do not modify source files or implement the plan.

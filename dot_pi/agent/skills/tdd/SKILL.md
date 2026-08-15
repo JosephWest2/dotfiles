@@ -1,16 +1,18 @@
 ---
-description: Implement a change test-first with red-green cycles
-argument-hint: "<task>"
+name: tdd
+description: Implements a requested change test-first through behavior-focused red-green cycles at agreed public seams. Use only when explicitly invoked.
+disable-model-invocation: true
 ---
-Use test-driven development for this task:
 
-${ARGUMENTS:-Use the task already described in the conversation. If there is no clear task, ask me what to implement.}
+# Test-driven development
+
+Use test-driven development for the request supplied with this skill command. If no request was supplied, use the clear implementation task already present in the conversation; if none exists, ask what the user wants implemented.
 
 Before coding, inspect the existing tests and test configuration. Ensure names and behavior match the project's domain language and architectural decisions.
 
 ## Choose the seam
 
-A seam is the public boundary where behavior can be observed without reaching into internals. Identify the public interface and propose the important seam or seams to test; confirm them with me before writing tests. Focus effort on critical behavior and complex logic rather than exhaustive low-value coverage.
+A seam is the public boundary where behavior can be observed without reaching into internals. Identify the public interface and propose the important seam or seams to test; confirm them with the user before writing tests. Focus effort on critical behavior and complex logic rather than exhaustive low-value coverage.
 
 ## Write tests worth keeping
 

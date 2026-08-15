@@ -1,10 +1,12 @@
 ---
-description: Research a change and save an implementation plan
-argument-hint: "<change request>"
+name: write-plan
+description: Researches a requested repository change and saves a standalone implementation plan under .pi/plans. Use only when explicitly invoked.
+disable-model-invocation: true
 ---
-Create and save a clear, actionable implementation plan for this change:
 
-${ARGUMENTS:-No change request was provided. Ask me what I want to change.}
+# Research and save an implementation plan
+
+Create and save a clear, actionable implementation plan for the request supplied with this skill command. If no request was supplied, use the clear change request already present in the conversation; if none exists, ask what the user wants to change.
 
 Read and follow all repository instructions. Inspect the relevant code, tests, and documentation before planning.
 
