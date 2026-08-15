@@ -88,13 +88,13 @@ table.insert(config.keys, {
 table.insert(config.keys, {
   key = 'v',
   mods = 'LEADER',
-  action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' },
+  action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' },
 })
 
 table.insert(config.keys, {
   key = 's',
   mods = 'LEADER',
-  action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' },
+  action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' },
 })
 
 table.insert(config.keys, {
