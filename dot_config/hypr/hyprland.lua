@@ -215,8 +215,8 @@ local mainMod = "SUPER"
 
 hl.bind(mainMod .. " + return", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + ALT + C", hl.dsp.exec_cmd([[hyprpicker | tee >(wl-copy) | { text=$(cat); notify-send "Copied color to clipboard: $text"; echo "$text" | wl-copy --primary; }]]))
-hl.bind(mainMod .. " + ALT + Q", hl.dsp.window.signal({ signal = 15 }))
-hl.bind(mainMod .. " + ALT + W", hl.dsp.window.close())
+hl.bind("ALT + Q", hl.dsp.window.close())
+hl.bind("ALT + W", hl.dsp.window.signal({ signal = 15 }))
 hl.bind(mainMod .. " + ALT + M", hl.dsp.exit())
 hl.bind(mainMod .. " + ALT + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + ALT + V", hl.dsp.window.float())
