@@ -11,6 +11,7 @@ local plugins = {
     load_plugin_config('autopairs'),
     load_plugin_config('treesitter'),
     load_plugin_config('fzf-lua'),
+    load_plugin_config('gitsigns'),
     load_plugin_config('auto-save'),
     --load_plugin_config('onedark'),
     --load_plugin_config('catppuccin'),
