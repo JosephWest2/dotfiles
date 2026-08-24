@@ -19,6 +19,7 @@ Templated files branch on `.chezmoi.hostname` / `.chezmoi.os` to vary behavior p
 - `dot_config/hypr`, `dot_config/waybar` — Arch/Hyprland only.
 - `private_dot_local/private_share/applications/zen-private.desktop` — Arch only.
 - `dot_config/aerospace` — macOS only.
+- `dot_claude` — Claude Code config (`settings.json`, global `CLAUDE.md`, `skills/`); excluded on `wet-leg`, which keeps its own unmanaged `~/.claude`.
 - `dot_wezterm.lua.tmpl`, `dot_config/kitty`, `dot_zshrc.tmpl`, `dot_config/private_fish` — shared, with host/OS fragments gated by templates or ignore rules.
 - `dot_codex/skills`, `dot_config/opencode` — agent/skill configs for Codex and opencode.
 
