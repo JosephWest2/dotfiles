@@ -7,7 +7,7 @@ tests/
 .codex/skills/.system/**
 
 {{- if eq .chezmoi.hostname "wet-leg" }}
-.claude/
+.claude/settings.json
 {{- end }}
 
 {{- if ne .chezmoi.os "darwin" }}

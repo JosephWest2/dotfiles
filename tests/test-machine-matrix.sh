@@ -101,7 +101,8 @@ check_profile() {
 
     case "$profile" in
         wet-leg)
-            assert_ignored "$ignored" ".claude" "$profile"
+            assert_ignored "$ignored" ".claude/settings.json" "$profile"
+            assert_included "$ignored" ".claude/CLAUDE.md" "$profile"
             ;;
         *)
             assert_included "$ignored" ".claude/settings.json" "$profile"
