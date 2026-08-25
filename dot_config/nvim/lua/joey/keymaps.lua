@@ -27,6 +27,10 @@ function M.init()
     vim.keymap.set("n", "<A-j>", ":cnext<CR>")
     vim.keymap.set("n", "<A-k>", ":cprev<CR>")
 
+    -- widen / narrow the current window, 3 columns at a time
+    vim.keymap.set("n", "<A-l>", "3<C-w>>")
+    vim.keymap.set("n", "<A-h>", "3<C-w><")
+
     -- lsp code action
     vim.keymap.set("n", "<C-.>", vim.lsp.buf.code_action)
 

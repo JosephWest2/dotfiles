@@ -1,5 +1,6 @@
 require('joey.config').init()
 require('joey.ft').init()
 require('joey.keymaps').init()
+require('joey.mouse').init()
 require('joey.lazy').init()
 require('joey.lsp').init()

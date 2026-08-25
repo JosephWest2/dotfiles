@@ -35,6 +35,7 @@ local plugins = {
     --load_plugin_config('opencode'),
     load_plugin_config('markview'),
     load_plugin_config('nvim-tree'),
+    load_plugin_config('barbar'),
     load_plugin_config('snacks'),
     load_plugin_config('nvim-scrollbar'),
     load_plugin_config('vim-razor'),
