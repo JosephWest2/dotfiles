@@ -1,6 +1,6 @@
 # Dotfiles managed with chezmoi
 
-This is a single chezmoi source state for three machines. Portable tools are shared; `.chezmoiignore` controls whether whole files or directories exist on a machine, while templates handle smaller content differences.
+This is a single chezmoi source state for two machines. Portable tools are shared; `.chezmoiignore` controls whether whole files or directories exist on a machine, while templates handle smaller content differences.
 
 ## Machines
 
@@ -8,11 +8,10 @@ Chezmoi's `.chezmoi.hostname` is the short hostname, up to the first dot.
 
 | Machine | Full hostname | Template hostname | Host-specific configuration |
 | --- | --- | --- | --- |
-| Work macOS | `wet-leg.local` | `wet-leg` | AeroSpace and the Zsh Lando path |
 | Personal macOS | `MacBookAir.ht.home` | `MacBookAir` | AeroSpace and larger Kitty sizing |
 | Personal Arch Linux | `joeyarchlinux` | `joeyarchlinux` | Hyprland, Waybar, Vocalinux, Zen desktop entry, Conda, Linux .NET certificates, and Wayland settings |
 
-Zsh, Fish, Kitty, WezTerm, tmux, Neovim, Yazi, Codex skills, opencode, and clang-format are shared by all three machines. Optional shell integrations are guarded so a missing tool does not break shell startup.
+Zsh, Fish, Kitty, WezTerm, tmux, Neovim, Yazi, Codex skills, opencode, and clang-format are shared by both machines. Optional shell integrations are guarded so a missing tool does not break shell startup.
 
 ## Machine-selection rules
 
@@ -52,7 +51,7 @@ Hyprland uses `Super` as its main workspace modifier; AeroSpace uses `Alt`. Numb
 | Toggle the `magic` scratchpad | `Super + Alt + S` | — |
 | Move window to the `magic` scratchpad | `Super + Alt + Shift + S` | — |
 
-On Arch, the left monitor is the secondary `HDMI-A-1` output and the right monitor is the primary `DP-1` output. On the work Mac, the left monitor is the main laptop display and the right monitor is the secondary display.
+On Arch, the left monitor is the secondary `HDMI-A-1` output and the right monitor is the primary `DP-1` output. On macOS, the left monitor is the main display and the right monitor is the secondary display.
 
 ### Hyprland application and window controls
 
@@ -67,7 +66,7 @@ On Arch, the left monitor is the secondary `HDMI-A-1` output and the right monit
 
 Correcting `.chezmoiignore` stops managing a wrong-host file but does not remove a copy that was applied previously. Back up and remove only the following paths after confirming they are stale:
 
-- Both Macs: `~/.config/hypr/`, `~/.config/waybar/`, and `~/.local/share/applications/zen-private.desktop`.
+- macOS: `~/.config/hypr/`, `~/.config/waybar/`, and `~/.local/share/applications/zen-private.desktop`.
 - Arch: `~/.config/aerospace/aerospace.toml`.
 - All machines: `~/.config/kitty/kitty.conf.bak`.
 

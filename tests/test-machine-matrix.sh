@@ -43,9 +43,6 @@ assert_included() {
 
 profile_data() {
     case "$1" in
-        wet-leg)
-            echo '{"chezmoi":{"hostname":"wet-leg","fqdnHostname":"wet-leg.local","os":"darwin"}}'
-            ;;
         MacBookAir)
             echo '{"chezmoi":{"hostname":"MacBookAir","fqdnHostname":"MacBookAir.ht.home","os":"darwin"}}'
             ;;
@@ -77,7 +74,7 @@ check_profile() {
     assert_included "$ignored" ".zshrc" "$profile"
 
     case "$profile" in
-        wet-leg|MacBookAir)
+        MacBookAir)
             assert_ignored "$ignored" ".config/uwsm" "$profile"
             assert_ignored "$ignored" ".config/hypr" "$profile"
             assert_ignored "$ignored" ".config/vocalinux" "$profile"
@@ -99,22 +96,13 @@ check_profile() {
             ;;
     esac
 
-    case "$profile" in
-        wet-leg)
-            assert_ignored "$ignored" ".claude/settings.json" "$profile"
-            assert_included "$ignored" ".claude/CLAUDE.md" "$profile"
-            ;;
-        *)
-            assert_included "$ignored" ".claude/settings.json" "$profile"
-            assert_included "$ignored" ".claude/CLAUDE.md" "$profile"
-            ;;
-    esac
+    assert_included "$ignored" ".claude/settings.json" "$profile"
+    assert_included "$ignored" ".claude/CLAUDE.md" "$profile"
 
     echo "ok - $profile"
 }
 
 command -v chezmoi >/dev/null 2>&1 || fail "chezmoi is required"
 
-check_profile wet-leg
 check_profile MacBookAir
 check_profile joeyarchlinux
