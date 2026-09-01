@@ -3,6 +3,12 @@ CLAUDE.md
 AGENTS.md
 tests/
 
+# Written by the apps themselves / appended to by tool installers, so they
+# drift constantly. Everything authored lives elsewhere: fish in conf.d/,
+# Claude in .claude/CLAUDE.md and .claude/skills/.
+.config/fish/config.fish
+.claude/settings.json
+
 .codex/skills/.system/
 .codex/skills/.system/**
 

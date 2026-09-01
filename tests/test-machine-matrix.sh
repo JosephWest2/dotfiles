@@ -41,6 +41,24 @@ assert_included() {
     fi
 }
 
+assert_managed() {
+    local managed=$1
+    local target=$2
+    local profile=$3
+
+    grep -qxF "$target" <<< "$managed" || fail "$profile: expected $target to be managed"
+}
+
+assert_unmanaged() {
+    local managed=$1
+    local target=$2
+    local profile=$3
+
+    if grep -qxF "$target" <<< "$managed"; then
+        fail "$profile: expected $target to be unmanaged"
+    fi
+}
+
 profile_data() {
     case "$1" in
         MacBookAir)
@@ -59,16 +77,22 @@ check_profile() {
     local profile=$1
     local data
     local ignored
+    local managed
 
     data=$(profile_data "$profile")
     ignored=$(chezmoi ignored --source "$repo_dir" --override-data "$data")
+    managed=$(chezmoi managed --source "$repo_dir" --override-data "$data")
 
     assert_ignored "$ignored" "README.md" "$profile"
     assert_ignored "$ignored" "CLAUDE.md" "$profile"
     assert_ignored "$ignored" "AGENTS.md" "$profile"
     assert_ignored "$ignored" "tests/test-machine-matrix.sh" "$profile"
 
-    assert_included "$ignored" ".config/fish/config.fish" "$profile"
+    # config.fish is installer-appended, so it is deliberately unmanaged;
+    # everything authored lives in conf.d/ instead.
+    assert_unmanaged "$managed" ".config/fish/config.fish" "$profile"
+    assert_managed "$managed" ".config/fish/conf.d/bun.fish" "$profile"
+    assert_managed "$managed" ".config/fish/conf.d/interactive.fish" "$profile"
     assert_included "$ignored" ".config/kitty/kitty.conf" "$profile"
     assert_included "$ignored" ".wezterm.lua" "$profile"
     assert_included "$ignored" ".zshrc" "$profile"
@@ -96,7 +120,8 @@ check_profile() {
             ;;
     esac
 
-    assert_included "$ignored" ".claude/settings.json" "$profile"
+    # Claude Code rewrites settings.json itself; only CLAUDE.md/skills are ours.
+    assert_unmanaged "$managed" ".claude/settings.json" "$profile"
     assert_included "$ignored" ".claude/CLAUDE.md" "$profile"
 
     echo "ok - $profile"

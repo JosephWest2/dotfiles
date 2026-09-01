@@ -1,0 +1,111 @@
+#!/usr/bin/env python3
+"""Create a git worktree under ~/.worktrees.
+
+The worktree directory is named after the current repository (its top-level
+directory name) plus a short unique suffix, e.g. ~/.worktrees/myrepo-a3f19c.
+
+Usage:
+    git-new-worktree [-b BRANCH] [--no-branch] [COMMITISH]
+    git new-worktree  [-b BRANCH] [--no-branch] [COMMITISH]
+
+By default a new branch is created, named after the worktree directory, based
+on COMMITISH (default: HEAD).  With -b, that branch name is used instead; if it
+already exists it is simply checked out in the new worktree.  With --no-branch
+the worktree is checked out in detached HEAD state at COMMITISH.
+
+On success the absolute path of the new worktree is printed on stdout.
+"""
+
+import argparse
+import os
+import secrets
+import subprocess
+import sys
+from pathlib import Path
+
+WORKTREES_DIR = Path(os.environ.get("GIT_WORKTREES_DIR", Path.home() / ".worktrees"))
+
+
+def die(msg):
+    print(f"git-new-worktree: {msg}", file=sys.stderr)
+    sys.exit(1)
+
+
+def git(*args, check=True):
+    return subprocess.run(
+        ["git", *args], capture_output=True, text=True, check=check
+    )
+
+
+def repo_root():
+    proc = git("rev-parse", "--show-toplevel", check=False)
+    if proc.returncode != 0:
+        die("not inside a git repository")
+    return Path(proc.stdout.strip())
+
+
+def repo_name(root):
+    # A bare repo's toplevel is empty; fall back to the git dir name.
+    name = root.name
+    if not name:
+        proc = git("rev-parse", "--absolute-git-dir", check=False)
+        if proc.returncode == 0:
+            name = Path(proc.stdout.strip()).name.removesuffix(".git")
+    return name or "repo"
+
+
+def branch_exists(name):
+    return git("show-ref", "--verify", "--quiet", f"refs/heads/{name}",
+               check=False).returncode == 0
+
+
+def unique_path(base_name):
+    for _ in range(100):
+        path = WORKTREES_DIR / f"{base_name}-{secrets.token_hex(3)}"
+        if not path.exists():
+            return path
+    die(f"could not find an unused name under {WORKTREES_DIR}")
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        prog="git-new-worktree",
+        description="Create a git worktree under ~/.worktrees.",
+    )
+    parser.add_argument("commitish", nargs="?", default="HEAD",
+                        help="commit/branch to base the worktree on (default: HEAD)")
+    parser.add_argument("-b", "--branch", metavar="BRANCH",
+                        help="branch to create (or check out, if it exists)")
+    parser.add_argument("--no-branch", action="store_true",
+                        help="detach HEAD instead of creating a branch")
+    args = parser.parse_args()
+
+    if args.branch and args.no_branch:
+        parser.error("-b/--branch and --no-branch are mutually exclusive")
+
+    root = repo_root()
+    path = unique_path(repo_name(root))
+
+    cmd = ["worktree", "add"]
+    if args.no_branch:
+        cmd += ["--detach", str(path), args.commitish]
+    else:
+        branch = args.branch or path.name
+        if branch_exists(branch):
+            cmd += [str(path), branch]
+        else:
+            cmd += ["-b", branch, str(path), args.commitish]
+
+    WORKTREES_DIR.mkdir(parents=True, exist_ok=True)
+
+    # git worktree add writes progress ("HEAD is now at ...") to stdout; keep
+    # stdout clean so the printed path can be used directly, e.g. cd $(...).
+    proc = subprocess.run(["git", "-C", str(root), *cmd], text=True, stdout=sys.stderr)
+    if proc.returncode != 0:
+        sys.exit(proc.returncode)
+
+    print(path)
+
+
+if __name__ == "__main__":
+    main()
