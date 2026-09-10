@@ -1,5 +1,27 @@
 local M = {}
 
+local function copy_file_reference(with_lines, selection)
+    local path = vim.fn.expand("%:.")
+    if path == "" then
+        vim.notify("This buffer has no file path", vim.log.levels.WARN)
+        return
+    end
+
+    local reference = path
+    if with_lines then
+        local first = vim.fn.line(".")
+        local last = selection and vim.fn.line("v") or first
+        first, last = math.min(first, last), math.max(first, last)
+        reference = reference .. ":" .. first
+        if last ~= first then
+            reference = reference .. "-" .. last
+        end
+    end
+
+    vim.fn.setreg("+", reference, "v")
+    vim.notify("Copied: " .. reference)
+end
+
 function M.init()
     -- recenter lines on <C-d> and <C-u>, move 1/3 window instead of 1/2
     vim.keymap.set("n", "<C-d>", "24j")
@@ -12,6 +34,17 @@ function M.init()
     vim.keymap.set({ "n", "v" }, "<A-y>", [["*y]])
     vim.keymap.set({ "n", "v" }, "<A-p>", [["*p]])
     vim.keymap.set({ "n", "v" }, "<A-P>", [["*P]])
+
+    -- file references for sharing, without copying file contents
+    vim.keymap.set({ "n", "x" }, "<leader>cf", function()
+        copy_file_reference(false)
+    end, { desc = "Copy file path" })
+    vim.keymap.set("n", "<leader>cl", function()
+        copy_file_reference(true)
+    end, { desc = "Copy file path and current line" })
+    vim.keymap.set("x", "<leader>cl", function()
+        copy_file_reference(true, true)
+    end, { desc = "Copy file path and selected lines" })
 
     -- substitute word under cursor across the whole file
     vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>]])
