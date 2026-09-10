@@ -4,10 +4,27 @@ local config = wezterm.config_builder()
 config.window_close_confirmation = 'AlwaysPrompt'
 config.leader = { key = 'Space', mods = 'CTRL', timeout_milliseconds = 1000 }
 
-wezterm.on("update-right-status", function(window, pane)
-  local workspace = wezterm.mux.get_active_workspace()
+wezterm.on('update-right-status', function(window, _pane)
+  local active_workspace = window:active_workspace()
+  local workspaces = wezterm.mux.get_workspace_names()
+  table.sort(workspaces)
 
-  window:set_right_status(" " .. workspace .. " ")
+  local segments = {}
+  for _, workspace in ipairs(workspaces) do
+    table.insert(segments, 'ResetAttributes')
+    table.insert(segments, { Text = ' ' })
+    if workspace == active_workspace then
+      table.insert(segments, { Background = { Color = '#61afef' } })
+      table.insert(segments, { Foreground = { Color = '#282c34' } })
+      table.insert(segments, { Attribute = { Intensity = 'Bold' } })
+    else
+      table.insert(segments, { Foreground = { Color = '#abb2bf' } })
+    end
+    table.insert(segments, { Text = ' ' .. workspace .. ' ' })
+  end
+  table.insert(segments, 'ResetAttributes')
+  table.insert(segments, { Text = ' ' })
+  window:set_right_status(wezterm.format(segments))
 end)
 
 config.color_scheme = 'OneHalfDark'
