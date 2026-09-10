@@ -1,14 +1,7 @@
 return {
     "sindrets/diffview.nvim",
+    lazy = false,
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    cmd = {
-        "DiffviewOpen",
-        "DiffviewClose",
-        "DiffviewFileHistory",
-        "DiffviewToggleFiles",
-        "DiffviewFocusFiles",
-        "DiffviewRefresh",
-    },
     keys = {
         { "<leader>gv", "<cmd>DiffviewOpen<CR>", desc = "Git: Open diff view" },
         { "<leader>gc", "<cmd>DiffviewClose<CR>", desc = "Git: Close diff view" },
