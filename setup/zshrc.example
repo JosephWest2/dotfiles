@@ -1,0 +1,6 @@
+# Shared preferences; installer additions belong in this local file.
+[[ -r "$HOME/.config/zsh/shared.zsh" ]] && source "$HOME/.config/zsh/shared.zsh"
+
+# SDKMAN is initialized locally so its installer can update this file.
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"

@@ -9,15 +9,15 @@ Chezmoi's `.chezmoi.hostname` is the short hostname, up to the first dot.
 | Machine | Full hostname | Template hostname | Host-specific configuration |
 | --- | --- | --- | --- |
 | Personal macOS | `MacBookAir.ht.home` | `MacBookAir` | AeroSpace and larger Kitty sizing |
-| Personal Arch Linux | `joeyarchlinux` | `joeyarchlinux` | Hyprland, Waybar, Vocalinux, Zen desktop entry, Conda, Linux .NET certificates, and Wayland settings |
+| Personal Arch Linux | `joeyarchlinux` | `joeyarchlinux` | Hyprland, Waybar, Zen desktop entry, Conda, Linux .NET certificates, and Wayland settings |
 
-Zsh, Fish, Kitty, WezTerm, tmux, Neovim, Yazi, Codex skills, opencode, and clang-format are shared by both machines. Optional shell integrations are guarded so a missing tool does not break shell startup.
+Zsh, Fish, Kitty, WezTerm, tmux, Neovim, Yazi, Claude instructions/skills, opencode agents, and clang-format are shared by both machines. Optional shell integrations are guarded so a missing tool does not break shell startup.
 
 ## Machine-selection rules
 
 - `.chezmoiignore` entries are target-relative paths such as `.config/hypr`, not source-state names such as `dot_config/hypr`.
 - AeroSpace is managed on Darwin hosts.
-- The Linux desktop stack, Vocalinux configuration, and Arch-specific Fish fragments are managed only on `joeyarchlinux`.
+- The Linux desktop stack and Arch-specific Fish fragments are managed only on `joeyarchlinux`.
 - Unknown hosts receive shared configuration but do not receive the Arch desktop stack.
 
 Run the machine-matrix smoke test after changing an ignore rule or template condition:
@@ -71,3 +71,40 @@ Correcting `.chezmoiignore` stops managing a wrong-host file but does not remove
 - All machines: `~/.config/kitty/kitty.conf.bak`.
 
 No cleanup is automated by this repository.
+
+## Shared preferences and local settings
+
+Chezmoi manages authored preferences. Applications and installers own these live files:
+
+- `~/.config/fish/config.fish` (shared Fish setup remains in `conf.d/`).
+- `~/.zshrc` (shared Zsh setup is `~/.config/zsh/shared.zsh`).
+- `~/.config/kitty/kitty.conf` and `current-theme.conf` (shared defaults are
+  `shared.conf` and `default-theme.conf`; local settings follow the shared include).
+- Vocalinux's configuration directory, OpenCode's `opencode.json`, Claude's
+  `settings.json`, and Codex's `config.toml`.
+
+After applying the shared files on each machine, connect the local entry points:
+
+```sh
+python3 setup/local-configs.py
+```
+
+Run this from the chezmoi source directory; Python 3 is required. The helper creates
+missing entry points, or backs up and migrates recognized previous dotfiles. It
+leaves already connected files alone. Customized entry points are preserved and
+reported for manual migration using `setup/zshrc.example` and
+`setup/kitty.conf.example`. Remove duplicate shared definitions when merging, while
+retaining installer hooks and local overrides. SDKMAN initialization stays in the
+local Zsh entry point. The helper never runs automatically during apply.
+
+Kitty's default theme is copied to the local current theme only if missing. Future
+interactive theme/font changes belong to the local files. Shared keybindings and
+host-specific font sizes remain in chezmoi.
+
+`examples/vocalinux-config.json` records the previous desired starting preferences.
+It is not applied or merged automatically. On a fresh Arch installation, it can be
+used as a reference when configuring Vocalinux; existing app settings remain local.
+
+The Conda Fish fragment supports `$HOME/miniconda3` only when its executable exists.
+If `conda init` also adds initialization to local `config.fish`, remove the duplicate
+initialization so Conda loads once.

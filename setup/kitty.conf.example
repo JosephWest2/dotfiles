@@ -1,0 +1,6 @@
+# Shared defaults first; local choices below take precedence.
+include shared.conf
+
+# BEGIN_KITTY_THEME
+include current-theme.conf
+# END_KITTY_THEME

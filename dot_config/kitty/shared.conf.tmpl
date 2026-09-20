@@ -1,0 +1,21 @@
+include default-theme.conf
+
+# Keep Kitty as a single, plain terminal.
+tab_bar_style hidden
+map ctrl+shift+t no_op
+map ctrl+shift+enter no_op
+map cmd+t no_op
+map cmd+enter no_op
+
+{{- if eq .chezmoi.hostname "MacBookAir" }}
+font_size 24.0
+{{- end }}
+{{- if eq .chezmoi.hostname "joeyarchlinux" }}
+font_size 12.0
+{{- end }}
+
+
+font_family      family="BlexMono Nerd Font Mono"
+bold_font        auto
+italic_font      auto
+bold_italic_font auto

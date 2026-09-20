@@ -1,13 +1,5 @@
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-if test -f /home/josephwest/miniconda3/bin/conda
-    eval /home/josephwest/miniconda3/bin/conda "shell.fish" "hook" $argv | source
-else
-    if test -f "/home/josephwest/miniconda3/etc/fish/conf.d/conda.fish"
-        . "/home/josephwest/miniconda3/etc/fish/conf.d/conda.fish"
-    else
-        set -x PATH "/home/josephwest/miniconda3/bin" $PATH
-    end
+# Personal integration; leave config.fish available to installers.
+# If conda init has also been run locally, remove that duplicate initialization.
+if test -x "$HOME/miniconda3/bin/conda"
+    "$HOME/miniconda3/bin/conda" shell.fish hook | source
 end
-# <<< conda initialize <<<
-

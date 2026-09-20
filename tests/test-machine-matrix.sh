@@ -93,9 +93,15 @@ check_profile() {
     assert_unmanaged "$managed" ".config/fish/config.fish" "$profile"
     assert_managed "$managed" ".config/fish/conf.d/bun.fish" "$profile"
     assert_managed "$managed" ".config/fish/conf.d/interactive.fish" "$profile"
-    assert_included "$ignored" ".config/kitty/kitty.conf" "$profile"
+    assert_managed "$managed" ".config/kitty/shared.conf" "$profile"
+    assert_managed "$managed" ".config/kitty/default-theme.conf" "$profile"
     assert_included "$ignored" ".wezterm.lua" "$profile"
-    assert_included "$ignored" ".zshrc" "$profile"
+    assert_managed "$managed" ".config/zsh/shared.zsh" "$profile"
+    for target in .zshrc .config/kitty/kitty.conf .config/kitty/current-theme.conf .config/vocalinux/config.json .config/opencode/opencode.json .codex/config.toml; do
+        assert_unmanaged "$managed" "$target" "$profile"
+    done
+    assert_ignored "$ignored" "setup/local-configs.py" "$profile"
+    assert_ignored "$ignored" "examples/vocalinux-config.json" "$profile"
 
     case "$profile" in
         MacBookAir)
@@ -111,7 +117,7 @@ check_profile() {
         joeyarchlinux)
             assert_included "$ignored" ".config/uwsm" "$profile"
             assert_included "$ignored" ".config/hypr" "$profile"
-            assert_included "$ignored" ".config/vocalinux" "$profile"
+            assert_ignored "$ignored" ".config/vocalinux" "$profile"
             assert_included "$ignored" ".config/waybar" "$profile"
             assert_included "$ignored" ".local/share/applications/zen-private.desktop" "$profile"
             assert_included "$ignored" ".config/fish/conf.d/conda-archlinux.fish" "$profile"

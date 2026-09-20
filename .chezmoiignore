@@ -2,10 +2,19 @@ README.md
 CLAUDE.md
 AGENTS.md
 tests/
+examples/
+setup/
 
 # Written by the apps themselves / appended to by tool installers, so they
 # drift constantly. Everything authored lives elsewhere: fish in conf.d/,
 # Claude in .claude/CLAUDE.md and .claude/skills/.
+.zshrc
+.config/kitty/kitty.conf
+.config/kitty/current-theme.conf
+.config/kitty/kitty.conf.bak
+.config/vocalinux/
+.config/opencode/opencode.json
+.codex/config.toml
 .config/fish/config.fish
 .claude/settings.json
 
@@ -19,7 +28,6 @@ tests/
 {{- if ne .chezmoi.hostname "joeyarchlinux" }}
 .config/hypr/
 .config/uwsm/
-.config/vocalinux/
 .config/waybar/
 .config/fish/conf.d/conda-archlinux.fish
 .config/fish/conf.d/dotnet.fish
