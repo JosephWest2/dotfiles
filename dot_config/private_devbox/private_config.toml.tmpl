@@ -1,0 +1,9 @@
+{{- $deployment := include "dot_config/private_devbox/encrypted_private_deployment.json.asc" | decrypt | fromJson -}}
+schema_version = 1
+expected_account = {{ $deployment.account | quote }}
+region = {{ $deployment.region | quote }}
+deployment = {{ $deployment.deployment | quote }}
+owner = {{ $deployment.owner | quote }}
+aws_profile = {{ .devboxOperatorProfile | quote }}
+manifest = "deployment.json"
+ssh_identity_file = {{ joinPath .chezmoi.homeDir ".ssh" "devbox_ed25519" | quote }}

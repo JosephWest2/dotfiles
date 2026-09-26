@@ -1,0 +1,13 @@
+{{- $devboxSync := promptBoolOnce . "devboxSync" "Enable encrypted devbox configuration sync" false -}}
+{{- $operator := get . "devboxOperatorProfile" | default "devbox-operator" -}}
+{{- if $devboxSync -}}
+{{- $operator = promptStringOnce . "devboxOperatorProfile" "Devbox operator AWS profile on this machine" $operator -}}
+{{- end -}}
+encryption = "gpg"
+
+[gpg]
+recipient = "F6CA6B8DBAF5F1600B0D41C85A2BD71941F8A418"
+
+[data]
+devboxSync = {{ $devboxSync }}
+devboxOperatorProfile = {{ $operator | quote }}

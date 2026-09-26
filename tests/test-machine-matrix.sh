@@ -62,10 +62,10 @@ assert_unmanaged() {
 profile_data() {
     case "$1" in
         MacBookAir)
-            echo '{"chezmoi":{"hostname":"MacBookAir","fqdnHostname":"MacBookAir.ht.home","os":"darwin"}}'
+            echo '{"devboxSync":false,"chezmoi":{"hostname":"MacBookAir","fqdnHostname":"MacBookAir.ht.home","os":"darwin"}}'
             ;;
         joeyarchlinux)
-            echo '{"chezmoi":{"hostname":"joeyarchlinux","fqdnHostname":"joeyarchlinux","os":"linux"}}'
+            echo '{"devboxSync":false,"chezmoi":{"hostname":"joeyarchlinux","fqdnHostname":"joeyarchlinux","os":"linux"}}'
             ;;
         *)
             fail "unknown profile $1"
@@ -102,6 +102,9 @@ check_profile() {
     done
     assert_ignored "$ignored" "setup/local-configs.py" "$profile"
     assert_ignored "$ignored" "examples/vocalinux-config.json" "$profile"
+    for target in .config/devbox/config.toml .config/devbox/deployment.json .ssh/devbox_ed25519 .ssh/devbox_ed25519.pub; do
+        assert_unmanaged "$managed" "$target" "$profile"
+    done
 
     case "$profile" in
         MacBookAir)

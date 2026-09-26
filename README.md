@@ -108,3 +108,67 @@ used as a reference when configuring Vocalinux; existing app settings remain loc
 The Conda Fish fragment supports `$HOME/miniconda3` only when its executable exists.
 If `conda init` also adds initialization to local `config.fish`, remove the duplicate
 initialization so Conda loads once.
+
+## Devbox configuration sync
+
+Devbox sync is optional on each machine. The deployment manifest and dedicated
+SSH key pair are stored as GPG-encrypted files because this repository is public.
+They use the existing personal GPG identity ending in `5A2BD71941F8A418`, also
+used by `pass`. The decryption key is never stored in this repository. New machines
+need that existing GPG identity available through your normal secure key setup;
+cloning dotfiles alone does not provide it.
+
+Run `chezmoi init` and choose whether to enable encrypted devbox sync. On an
+enabled machine, enter the **operator** AWS profile name printed by devbox setup
+(for example, `devbox-operator`). This is separate from the source login profile
+such as `devbox-profile`. The local choices are stored in
+`~/.config/chezmoi/chezmoi.toml` as `data.devboxSync` and
+`data.devboxOperatorProfile`. Enabling sync does not install devbox or provision
+AWS resources; current devbox releases support Linux clients.
+
+Only these devbox files are managed:
+
+- `~/.config/devbox/deployment.json`, copied exactly from its encrypted source.
+- `~/.config/devbox/config.toml`, generated from the manifest's account, region,
+  deployment and owner, with this machine's operator profile and home directory.
+- `~/.ssh/devbox_ed25519` and its adjacent `.pub` file, decrypted from their
+  encrypted sources. The private key and devbox config/manifest remain mode 0600.
+
+AWS credentials, login/SSO caches, OpenTofu state, setup journals and encryption
+private keys are not synchronized. Authenticate separately on every machine.
+The config template owns its fields; put future shared options in that template
+and keep per-machine operator names in the local chezmoi data.
+
+For an already initialized dotfiles checkout, apply just the devbox files with:
+
+```sh
+chezmoi apply --exclude=scripts \
+  ~/.config/devbox/config.toml ~/.config/devbox/deployment.json \
+  ~/.ssh/devbox_ed25519 ~/.ssh/devbox_ed25519.pub
+```
+
+This avoids running unrelated dotfile setup scripts during a clean devbox test.
+If the operator profile has not been configured yet, use devbox's existing-manifest
+setup after syncing the files, then set `data.devboxOperatorProfile` to the operator
+name it prints. Sync does not create AWS profiles or extend their permissions.
+
+After a reviewed foundation change, export the updated manifest and capture only
+that file from the publishing machine:
+
+```sh
+chezmoi add --encrypt ~/.config/devbox/deployment.json
+```
+
+Commit and push the encrypted update. Other enrolled machines receive it through
+their normal `chezmoi update` workflow. This is explicit file distribution, not
+automatic AWS discovery or monitoring of new exports. Use one publishing machine
+for a deployment to avoid overwriting a newer manifest with a stale copy.
+
+To opt out, set `data.devboxSync = false`. Existing files are preserved and become
+unmanaged; disabling sync does not revoke copies of SSH keys already on a device.
+Never remove `--encrypt` when capturing the manifest or private key, and never
+print decrypted key contents in diffs or logs.
+
+To validate this configuration without AWS or personal keys, run
+`python3 tests/test-devbox-sync.py` (Python 3.11+, GPG and chezmoi required).
+It checks two simulated clients, encrypted updates, file permissions and opt-out.
