@@ -30,6 +30,8 @@ Templated files branch on `.chezmoi.hostname` / `.chezmoi.os` to vary behavior p
 - Vocalinux live config, OpenCode settings, Codex settings, and Kitty's current theme are ignored.
   `examples/vocalinux-config.json` is a reference only, never applied.
 - `dot_config/opencode` — authored opencode agent definitions.
+- `dot_codex/skills/claude-subagents` — shared Codex skill and Python runner for
+  delegating tasks to Claude Code. Test with `python3 tests/test-claude-agent.py`.
 
 ## Working in this repo
 

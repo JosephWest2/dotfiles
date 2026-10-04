@@ -13,6 +13,12 @@ Chezmoi's `.chezmoi.hostname` is the short hostname, up to the first dot.
 
 Zsh, Fish, Kitty, WezTerm, tmux, Neovim, Yazi, Claude instructions/skills, opencode agents, and clang-format are shared by both machines. Optional shell integrations are guarded so a missing tool does not break shell startup.
 
+The shared Codex skill `claude-subagents` delegates tasks to the installed Claude
+Code CLI. After applying, invoke `$claude-subagents` in Codex; its Python 3.9+
+runner supports read/edit tasks, isolated worktrees, logs, timeouts, and session
+follow-ups. See `dot_codex/skills/claude-subagents/SKILL.md` for usage. Run the
+offline behavior tests with `python3 tests/test-claude-agent.py`.
+
 ## Machine-selection rules
 
 - `.chezmoiignore` entries are target-relative paths such as `.config/hypr`, not source-state names such as `dot_config/hypr`.
