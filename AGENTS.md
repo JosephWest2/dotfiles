@@ -32,6 +32,7 @@ Templated files branch on `.chezmoi.hostname` / `.chezmoi.os` to vary behavior p
 
 ## Working in this repo
 
+- Never use vendor or agent prefixes such as `codex/`, `claude/`, or `t3code/` in Git branch names. Use descriptive, vendor-neutral branch names.
 - After editing a `dot_*` file, changes aren't live until `chezmoi apply` runs.
 - When adding a machine-specific config, prefer a template conditional over a new file unless the divergence is large.
 - Don't assume a file applies to both machines — verify against the hostname/os conditionals above.
