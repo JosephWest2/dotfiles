@@ -24,6 +24,7 @@ Templated files branch on `.chezmoi.hostname` / `.chezmoi.os` to vary behavior p
 - `dot_wezterm.lua.tmpl`, `dot_config/kitty`, `dot_config/zsh`, `dot_config/private_fish` — shared, with host/OS fragments gated by templates or ignore rules.
 - Fish config lives entirely in `dot_config/private_fish/conf.d/`; `config.fish` itself is
   ignored so tool installers can append to it without causing drift.
+  The fnm startup hook is also ignored so Node version manager selection stays local.
 - Zsh and Kitty main configs are local. Shared defaults live in `dot_config/zsh/shared.zsh`
   and `dot_config/kitty/shared.conf.tmpl`; `setup/local-configs.py` connects them after apply.
 - Vocalinux live config, OpenCode settings, Codex settings, and Kitty's current theme are ignored.

@@ -18,6 +18,9 @@ setup/
 .config/fish/config.fish
 .claude/settings.json
 
+# Node version manager selection is local to each machine.
+.config/fish/conf.d/fnm.fish
+
 .codex/skills/.system/
 .codex/skills/.system/**
 
