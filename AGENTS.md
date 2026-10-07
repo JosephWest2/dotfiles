@@ -19,7 +19,8 @@ Templated files branch on `.chezmoi.hostname` / `.chezmoi.os` to vary behavior p
 - `dot_config/hypr`, `dot_config/waybar` — Arch/Hyprland only.
 - `private_dot_local/private_share/applications/zen-private.desktop` — Arch only.
 - `dot_config/aerospace` — macOS only.
-- `dot_claude` — Claude Code config (global `CLAUDE.md`, `skills/`). `settings.json` is
+- `dot_claude` — Claude Code config (global `CLAUDE.md`, `skills/`). `dot_codex/AGENTS.md` holds the
+  same global rules for Codex; keep the two in sync. `settings.json` is
   ignored: Claude Code rewrites it on `/model` etc., so it drifted every session.
 - `dot_wezterm.lua.tmpl`, `dot_config/kitty`, `dot_config/zsh`, `dot_config/private_fish` — shared, with host/OS fragments gated by templates or ignore rules.
 - Fish config lives entirely in `dot_config/private_fish/conf.d/`; `config.fish` itself is
@@ -27,9 +28,8 @@ Templated files branch on `.chezmoi.hostname` / `.chezmoi.os` to vary behavior p
   The fnm startup hook is also ignored so Node version manager selection stays local.
 - Zsh and Kitty main configs are local. Shared defaults live in `dot_config/zsh/shared.zsh`
   and `dot_config/kitty/shared.conf.tmpl`; `setup/local-configs.py` connects them after apply.
-- Vocalinux live config, OpenCode settings, Codex settings, and Kitty's current theme are ignored.
+- Vocalinux live config, Codex settings, and Kitty's current theme are ignored.
   `examples/vocalinux-config.json` is a reference only, never applied.
-- `dot_config/opencode` — authored opencode agent definitions.
 - `dot_codex/skills/claude-subagents` — shared Codex skill and Python runner for
   delegating tasks to Claude Code. Test with `python3 tests/test-claude-agent.py`.
 - `dot_claude/skills/tailnet-ssh`, `dot_codex/skills/tailnet-ssh` — thin wrappers around the shared
@@ -38,7 +38,6 @@ Templated files branch on `.chezmoi.hostname` / `.chezmoi.os` to vary behavior p
 
 ## Working in this repo
 
-- Never use vendor or agent prefixes such as `codex/`, `claude/`, or `t3code/` in Git branch names. Use descriptive, vendor-neutral branch names.
 - After editing a `dot_*` file, changes aren't live until `chezmoi apply` runs.
 - When adding a machine-specific config, prefer a template conditional over a new file unless the divergence is large.
 - Don't assume a file applies to both machines — verify against the hostname/os conditionals above.

@@ -11,7 +11,7 @@ Chezmoi's `.chezmoi.hostname` is the short hostname, up to the first dot.
 | Personal macOS | `MacBookAir.ht.home` | `MacBookAir` | AeroSpace and larger Kitty sizing |
 | Personal Arch Linux | `joeyarchlinux` | `joeyarchlinux` | Hyprland, Waybar, Zen desktop entry, Conda, Linux .NET certificates, and Wayland settings |
 
-Zsh, Fish, Kitty, WezTerm, tmux, Neovim, Yazi, Claude instructions/skills, opencode agents, and clang-format are shared by both machines. Optional shell integrations are guarded so a missing tool does not break shell startup.
+Zsh, Fish, Kitty, WezTerm, tmux, Neovim, Yazi, Claude and Codex instructions/skills, and clang-format are shared by both machines. Optional shell integrations are guarded so a missing tool does not break shell startup.
 
 The shared Codex skill `claude-subagents` delegates tasks to the installed Claude
 Code CLI. After applying, invoke `$claude-subagents` in Codex; its Python 3.9+
@@ -91,8 +91,8 @@ Chezmoi manages authored preferences. Applications and installers own these live
 - `~/.zshrc` (shared Zsh setup is `~/.config/zsh/shared.zsh`).
 - `~/.config/kitty/kitty.conf` and `current-theme.conf` (shared defaults are
   `shared.conf` and `default-theme.conf`; local settings follow the shared include).
-- Vocalinux's configuration directory, OpenCode's `opencode.json`, Claude's
-  `settings.json`, and Codex's `config.toml`.
+- Vocalinux's configuration directory, Claude's `settings.json`, and Codex's
+  `config.toml`.
 
 After applying the shared files on each machine, connect the local entry points:
 

@@ -99,7 +99,7 @@ check_profile() {
     assert_managed "$managed" ".config/zsh/shared.zsh" "$profile"
     assert_managed "$managed" ".codex/skills/claude-subagents/SKILL.md" "$profile"
     assert_managed "$managed" ".codex/skills/claude-subagents/scripts/claude-agent.py" "$profile"
-    for target in .zshrc .config/kitty/kitty.conf .config/kitty/current-theme.conf .config/vocalinux/config.json .config/opencode/opencode.json .codex/config.toml; do
+    for target in .zshrc .config/kitty/kitty.conf .config/kitty/current-theme.conf .config/vocalinux/config.json .codex/config.toml; do
         assert_unmanaged "$managed" "$target" "$profile"
     done
     assert_ignored "$ignored" "setup/local-configs.py" "$profile"

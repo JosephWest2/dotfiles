@@ -13,7 +13,6 @@ setup/
 .config/kitty/current-theme.conf
 .config/kitty/kitty.conf.bak
 .config/vocalinux/
-.config/opencode/opencode.json
 .codex/config.toml
 .config/fish/config.fish
 .claude/settings.json
