@@ -1,0 +1,4 @@
+interface:
+  display_name: "Tailnet SSH"
+  short_description: "Run commands and copy files on the other personal machine"
+  default_prompt: "Use $tailnet-ssh to check connectivity to my other machine, then run the task there."

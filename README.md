@@ -19,6 +19,11 @@ runner supports read/edit tasks, isolated worktrees, logs, timeouts, and session
 follow-ups. See `dot_codex/skills/claude-subagents/SKILL.md` for usage. Run the
 offline behavior tests with `python3 tests/test-claude-agent.py`.
 
+The `tailnet-ssh` skill (Claude and Codex) lets an agent on either machine reach
+the other over Tailscale with plain OpenSSH. Both copies render from
+`.chezmoitemplates/tailnet-ssh/`. The keys (`~/.ssh/tailnet_ed25519`) are set up by
+hand on each machine; see the skill for details.
+
 ## Machine-selection rules
 
 - `.chezmoiignore` entries are target-relative paths such as `.config/hypr`, not source-state names such as `dot_config/hypr`.

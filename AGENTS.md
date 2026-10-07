@@ -32,6 +32,9 @@ Templated files branch on `.chezmoi.hostname` / `.chezmoi.os` to vary behavior p
 - `dot_config/opencode` — authored opencode agent definitions.
 - `dot_codex/skills/claude-subagents` — shared Codex skill and Python runner for
   delegating tasks to Claude Code. Test with `python3 tests/test-claude-agent.py`.
+- `dot_claude/skills/tailnet-ssh`, `dot_codex/skills/tailnet-ssh` — thin wrappers around the shared
+  `.chezmoitemplates/tailnet-ssh/` (SKILL.md + helper script). Edit the shared templates. The
+  remote host is chosen by `.chezmoi.os` (Linux targets the Mac, macOS targets Linux).
 
 ## Working in this repo
 
