@@ -79,6 +79,16 @@ bash ~/.claude/skills/codex/scripts/codex-agent.sh --review custom \
 bash ~/.claude/skills/codex/scripts/codex-agent.sh --resume 01a1... "Now also check the retry tests."
 ```
 
+## Review rounds
+
+After the review's findings are fixed, **resume the same review session** for the re-review
+(`--resume <session-id>`, same `--cd`, with the checkout updated to the new commit) rather than
+starting a fresh reviewer. It already knows the code and its own findings, so it checks the fixes
+precisely, finishes faster, and doesn't restart the hunt with a new set of nitpicks. Counter its
+anchoring by asking it to confirm each finding *and* review the whole fix diff for regressions.
+Start a fresh review when the change was substantially reworked or rebased, the session was on an
+older model, or after about three rounds.
+
 ## Handling results
 
 - Treat the output as a subagent report: **verify** claims before acting on them or passing them on. Spot-check cited files, and re-run tests yourself.
