@@ -15,9 +15,14 @@ section), `docs/CLI.md`.
 - The checkout is on the local branch `kwin-6.8-rgbx-capture`. KWin 6.8 sends
   screenshots in RGBX8888, which upstream `main` rejects (`capture_failed` at
   `session start`).
-- `session start` and `doctor` resolve `.local/dependencies` and the artifacts dir
-  against the cwd. From elsewhere, pass
-  `--dependency-root ~/src/kde_agent/.local/dependencies --artifacts ~/src/kde_agent/.agent-desktop/artifacts`.
+- `launch` needs a running session. `session start` and `doctor` resolve
+  `.local/dependencies` and the artifacts dir against the cwd, so from elsewhere run
+  `$AD session start --dependency-root ~/src/kde_agent/.local/dependencies --artifacts ~/src/kde_agent/.agent-desktop/artifacts`.
+  End with `$AD session stop`.
+- The worker gives KWin 1s to answer a health check about once a second. Under
+  heavy CPU load (e.g. parallel `blender -b` jobs) a ready session can fail:
+  commands return `session_unavailable` and `session status` shows
+  `failure.code: timeout`, component `compositor`. Stop, start and relaunch.
 - `launch` returns `.result.application.ref` and `.result.windows[].ref`. Rows from
   `windows` use `.window.ref`. `screenshot` returns a PNG at `.result.path`.
 - `type` only sends US-layout ASCII: KWin 6.8 doesn't advertise the input method
