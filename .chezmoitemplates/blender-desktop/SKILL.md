@@ -47,5 +47,5 @@ Not in the docs:
 - `shift+f4` over an area turns it into a Python console whose typed lines run in
   the live session. Over the timeline it's only two lines tall, too small to read
   output.
-- `f12` opens a separate `Blender Render` window that takes focus. Closing it
-  (`escape` over it) doesn't give focus back to the main window.
+- `f12` opens a separate `Blender Render` window that takes focus. `escape` over it
+  closes it, and the main window is active again.
