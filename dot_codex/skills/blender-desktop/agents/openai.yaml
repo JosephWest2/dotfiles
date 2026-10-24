@@ -1,0 +1,4 @@
+interface:
+  display_name: "Blender Desktop"
+  short_description: "Drive the Blender GUI in a private headless KDE session"
+  default_prompt: "Use $blender-desktop to open Blender, do the task in the GUI and confirm it with a screenshot."

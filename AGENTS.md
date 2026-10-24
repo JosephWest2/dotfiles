@@ -18,6 +18,9 @@ Templated files branch on `.chezmoi.hostname` / `.chezmoi.os` to vary behavior p
 - `bin/` — personal scripts mapped to `~/bin`, which `dot_config/zsh/shared.zsh` puts on `PATH`.
 - `dot_config/hypr`, `dot_config/waybar` — Arch/Hyprland only.
 - `private_dot_local/private_share/applications/zen-private.desktop` — Arch only.
+- `dot_claude/skills/blender-desktop`, `dot_codex/skills/blender-desktop` — Arch only; wrappers around
+  `.chezmoitemplates/blender-desktop/SKILL.md`. It drives Blender through the kde_agent checkout at
+  `~/src/kde_agent`, which chezmoi doesn't manage.
 - `dot_config/aerospace` — macOS only.
 - `dot_claude` — Claude Code config (global `CLAUDE.md`, `skills/`). `dot_codex/AGENTS.md` holds the
   same global rules for Codex; keep the two in sync. `settings.json` is
