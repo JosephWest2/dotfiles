@@ -12,17 +12,18 @@ section), `docs/CLI.md`.
 
 - CLI: `AD="$HOME/src/kde_agent/.local/dependencies/venv/bin/agent-desktop --json"`.
   The venv holds a non-editable install built by `tools/setup.sh`: switching
-  branches changes nothing until setup runs again. The installed copy includes
-  PR #110 (KWin 6.8 sends RGBX8888 screenshots). Built from a checkout without
-  it, every `session start` fails with `capture_failed`.
+  branches changes nothing until setup runs again. It was built from the local
+  branch `local-kwin-6.8`: `main` plus PR #110 (KWin 6.8 sends RGBX8888
+  screenshots) and PR #112 (slow KWin health replies). Built without #110, every
+  `session start` fails with `capture_failed`.
 - `launch` needs a running session. `session start` resolves `.local/dependencies`
   and the artifacts dir against the cwd, so from elsewhere run
   `$AD session start --dependency-root ~/src/kde_agent/.local/dependencies --artifacts ~/src/kde_agent/.agent-desktop/artifacts`
   (`doctor` takes only `--dependency-root`).
-- The worker gives KWin 1s to answer a health check about once a second. Under
-  heavy CPU load (e.g. parallel `blender -b` jobs) a ready session can fail:
-  commands return `session_unavailable` and `session status` shows
-  `failure.code: timeout`, component `compositor` (issue #111). A new session works.
+- A ready session fails if KWin or the private bus doesn't answer a health check
+  for about 5s, which heavy host load (e.g. parallel `blender -b` jobs) can cause:
+  commands return `session_unavailable` and `session status` shows a `timeout`
+  failure for `compositor` or `bus` (issue #111). A new session works.
 - `launch` returns `.result.application.ref` and `.result.windows[].ref`. Rows from
   `windows` use `.window.ref`. `screenshot` returns a PNG at `.result.path`.
 - `type` only sends US-layout ASCII: KWin 6.8 doesn't advertise the input method
