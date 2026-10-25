@@ -33,6 +33,7 @@ setup/
 .config/waybar/
 .config/fish/conf.d/conda-archlinux.fish
 .config/fish/conf.d/dotnet.fish
+.config/fish/conf.d/claude-tmpdir.fish
 .local/share/applications/zen-private.desktop
 .claude/skills/desktop-use/
 .codex/skills/desktop-use/
