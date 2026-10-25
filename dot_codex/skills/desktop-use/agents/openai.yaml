@@ -1,0 +1,4 @@
+interface:
+  display_name: "Desktop Use"
+  short_description: "Drive GUI apps in a private headless KWin session"
+  default_prompt: "Use $desktop-use to open the app, do the task in its GUI and confirm it with a screenshot."

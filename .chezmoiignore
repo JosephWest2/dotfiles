@@ -34,6 +34,6 @@ setup/
 .config/fish/conf.d/conda-archlinux.fish
 .config/fish/conf.d/dotnet.fish
 .local/share/applications/zen-private.desktop
-.claude/skills/blender-desktop/
-.codex/skills/blender-desktop/
+.claude/skills/desktop-use/
+.codex/skills/desktop-use/
 {{- end }}

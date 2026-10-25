@@ -115,8 +115,8 @@ check_profile() {
             assert_ignored "$ignored" ".config/fish/conf.d/conda-archlinux.fish" "$profile"
             assert_ignored "$ignored" ".config/fish/conf.d/dotnet.fish" "$profile"
             assert_included "$ignored" ".config/aerospace" "$profile"
-            assert_ignored "$ignored" ".claude/skills/blender-desktop" "$profile"
-            assert_ignored "$ignored" ".codex/skills/blender-desktop" "$profile"
+            assert_ignored "$ignored" ".claude/skills/desktop-use" "$profile"
+            assert_ignored "$ignored" ".codex/skills/desktop-use" "$profile"
             ;;
         joeyarchlinux)
             assert_included "$ignored" ".config/uwsm" "$profile"
@@ -127,8 +127,8 @@ check_profile() {
             assert_included "$ignored" ".config/fish/conf.d/conda-archlinux.fish" "$profile"
             assert_included "$ignored" ".config/fish/conf.d/dotnet.fish" "$profile"
             assert_ignored "$ignored" ".config/aerospace" "$profile"
-            assert_managed "$managed" ".claude/skills/blender-desktop/SKILL.md" "$profile"
-            assert_managed "$managed" ".codex/skills/blender-desktop/SKILL.md" "$profile"
+            assert_managed "$managed" ".claude/skills/desktop-use/SKILL.md" "$profile"
+            assert_managed "$managed" ".codex/skills/desktop-use/SKILL.md" "$profile"
             ;;
     esac
 
