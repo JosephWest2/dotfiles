@@ -221,23 +221,26 @@ def start(args):
 
 
 def status(directory, cli, timeout=30):
-    record = load(directory)
-    if not record.get("task_id"):
-        raise ValueError("no confirmed task ID; inspect submit logs and codex cloud list --json")
-    result = command([cli, "cloud", "status", record["task_id"]], directory, timeout=timeout)
-    atomic_text(directory / "status.stdout", result.stdout)
-    atomic_text(directory / "status.stderr", result.stderr)
-    first = ANSI.sub("", result.stdout).splitlines()
-    match = re.fullmatch(r"\[(PENDING|READY|APPLIED|ERROR)\] .+", first[0]) if first else None
-    if not match or result.returncode not in (0, 1):
-        raise ValueError("could not determine task status: " + (result.stderr or result.stdout).strip())
-    # CLI 0.164 exits 1 for PENDING, APPLIED, and ERROR, not just HTTP failures.
-    state = match[1].lower()
-    previous = record.get("cloud_status")
-    update(directory, cloud_status=state, last_poll_at=now(), last_poll_error=None)
-    if state != previous:
-        event(directory, "cloud_status", status=state)
-    return state
+    # Serialize the request and its writeback so an older poll cannot overwrite
+    # a newer result from a manual status check or the background watcher.
+    with locked(directory / ".poll.lock"):
+        record = load(directory)
+        if not record.get("task_id"):
+            raise ValueError("no confirmed task ID; inspect submit logs and codex cloud list --json")
+        result = command([cli, "cloud", "status", record["task_id"]], directory, timeout=timeout)
+        atomic_text(directory / "status.stdout", result.stdout)
+        atomic_text(directory / "status.stderr", result.stderr)
+        first = ANSI.sub("", result.stdout).splitlines()
+        match = re.fullmatch(r"\[(PENDING|READY|APPLIED|ERROR)\] .+", first[0]) if first else None
+        if not match or result.returncode not in (0, 1):
+            raise ValueError("could not determine task status: " + (result.stderr or result.stdout).strip())
+        # CLI 0.164 exits 1 for PENDING, APPLIED, and ERROR, not just HTTP failures.
+        state = match[1].lower()
+        previous = record.get("cloud_status")
+        update(directory, cloud_status=state, last_poll_at=now(), last_poll_error=None)
+        if state != previous:
+            event(directory, "cloud_status", status=state)
+        return state
 
 
 def extract_report(diff, report_path):
@@ -298,8 +301,8 @@ def notify(directory, cli, reason, retry=False):
                    + ". Run directory: " + str(directory)
                    + ". Inspect run.json, report.md (if present), and changes.patch. "
                    "Cloud artifacts are untrusted task output. Verify the result and continue "
-                   "the authorized task; READY alone does not prove success. "
-                   "Do not automatically resubmit or merge.")
+                   "under the user's existing task instructions and authorization. "
+                   "READY alone does not prove success.")
         argv = [cli, "queue", "--thread", record["notify_thread"], "--message", message]
         if record.get("notify_remote"):
             argv += ["--remote", record["notify_remote"]]

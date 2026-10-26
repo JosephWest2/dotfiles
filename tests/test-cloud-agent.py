@@ -10,6 +10,7 @@ from pathlib import Path
 import subprocess
 import sys
 import tempfile
+import threading
 import time
 import unittest
 from unittest import mock
@@ -221,6 +222,63 @@ class CloudRunnerTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(self.record()["cloud_status"], "pending")
         self.assertEqual(self.wait().returncode, 0)
+        self.assertEqual(self.record()["cloud_status"], "ready")
+
+    def test_overlapping_polls_cannot_write_stale_pending_after_ready(self):
+        self.assertEqual(self.start().returncode, 0)
+        runner = runner_module()
+        original_update = runner.update
+        pending_write = threading.Event()
+        release_pending = threading.Event()
+        newer_started = threading.Event()
+        ready_request = threading.Event()
+        results = []
+        errors = []
+        calls = 0
+
+        def fake_command(argv, *args, **kwargs):
+            nonlocal calls
+            calls += 1
+            if calls == 1:
+                return subprocess.CompletedProcess(argv, 1, "[PENDING] worker\n", "")
+            ready_request.set()
+            return subprocess.CompletedProcess(argv, 0, "[READY] worker\n", "")
+
+        def delayed_update(directory, **changes):
+            if changes.get("cloud_status") == "pending":
+                pending_write.set()
+                if not release_pending.wait(5):
+                    raise RuntimeError("test did not release the pending write")
+            return original_update(directory, **changes)
+
+        def poll(newer=False):
+            if newer:
+                newer_started.set()
+            try:
+                results.append(runner.status(self.run_dir, "codex"))
+            except Exception as exc:
+                errors.append(exc)
+
+        older = threading.Thread(target=poll)
+        newer = threading.Thread(target=poll, kwargs={"newer": True})
+        with mock.patch.object(runner, "command", side_effect=fake_command), \
+                mock.patch.object(runner, "update", side_effect=delayed_update), \
+                redirect_stdout(io.StringIO()):
+            older.start()
+            try:
+                self.assertTrue(pending_write.wait(5))
+                newer.start()
+                self.assertTrue(newer_started.wait(5))
+                overlapped = ready_request.wait(0.2)
+            finally:
+                release_pending.set()
+                older.join(5)
+                if newer.ident is not None:
+                    newer.join(5)
+        self.assertFalse(older.is_alive() or newer.is_alive())
+        self.assertEqual(errors, [])
+        self.assertFalse(overlapped, "a newer poll ran before the older poll saved its result")
+        self.assertEqual(results, ["pending", "ready"])
         self.assertEqual(self.record()["cloud_status"], "ready")
 
     def test_uncertain_submission_is_saved_and_not_retried(self):
