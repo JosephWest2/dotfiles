@@ -19,6 +19,13 @@ runner supports read/edit tasks, isolated worktrees, logs, timeouts, and session
 follow-ups. See `dot_codex/skills/claude-subagents/SKILL.md` for usage. Run the
 offline behavior tests with `python3 tests/test-claude-agent.py`.
 
+The shared Codex skill `cloud-subagents` submits work to published Codex Cloud
+environments using the CLI's ChatGPT login. Its runner saves task records,
+retrieves reports and patches, and can watch in the background and queue a
+completion notice to the parent session. See
+`dot_codex/skills/cloud-subagents/SKILL.md` for setup and notification limits.
+Run its offline tests with `python3 tests/test-cloud-agent.py`.
+
 The `tailnet-ssh` skill (Claude and Codex) lets an agent on either machine reach
 the other over Tailscale with plain OpenSSH. Both copies render from
 `.chezmoitemplates/tailnet-ssh/`. The keys (`~/.ssh/tailnet_ed25519`) are set up by

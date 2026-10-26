@@ -1,0 +1,4 @@
+interface:
+  display_name: "Cloud Subagents"
+  short_description: "Run Codex Cloud workers and notify the parent"
+  default_prompt: "Use $cloud-subagents to delegate a bounded task to Codex Cloud, track it, and verify its report and changes."
