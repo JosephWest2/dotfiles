@@ -11,18 +11,47 @@ tasks; they do not inherit this conversation or share local files.
 
 ## Start and track
 
-Requires Python 3.9+, Git, a published Codex Cloud environment with the intended
-repository, and `codex login` with ChatGPT. CLI commands/output were checked
+Requires Python 3.9+, Git, a CLI-discoverable Codex Cloud environment with the
+intended repository, and `codex login` with ChatGPT. CLI commands/output were checked
 against 0.164.0 on 2026-10-25. The runner strips API-key/endpoint overrides from
 its child environment and checks ChatGPT login; it never reads OAuth tokens or
 falls back to API billing. This does not assert a particular plan's entitlement
 or remaining cloud allowance.
 
-Choose the environment using `codex cloud` or the Cloud environment picker.
-Pass its ID or unambiguous label with `--env`. Optionally save a repository's
+Choose the environment using `codex cloud`, then `o` for its environment picker.
+`codex cloud list --json` lists tasks, not environments. Pass a discovered
+environment's ID or unambiguous label with `--env`. Optionally save a repository's
 default with `git config --local cloud-agent.environment ENV_ID`; it stays local
-and is shared by the repository's worktrees. The runner does not create or
+to that clone and is shared by its worktrees. This setting does not register an
+environment with Codex or make it discoverable. The runner does not create or
 publish environments, change setup scripts, or synchronize personal skills.
+
+### Current Cloud environments may be invisible to the CLI
+
+Live check on 2026-10-26 with CLI 0.164.0: a published private environment was
+visible in desktop/web Settings > Codex Cloud and selectable in the web Cloud
+composer, while the CLI picker showed only `All Environments (Global)`.
+Submission returned `no cloud environments are available for this workspace`.
+This matches [upstream issue #50182](https://github.com/openai/codex/issues/50182).
+The released CLI queries the legacy `/wham/environments` catalog and rejects an
+empty result before matching `--env`; an explicit current-environment ID or
+saved Git setting cannot bypass that check. Desktop visibility alone does not
+establish CLI compatibility. Do not assume this symptom requires recreating the
+environment or updating the desktop app.
+
+When discovery is empty, check the account/workspace and the current upstream
+issue before requesting a new environment. OpenAI documents
+[current](https://learn.chatgpt.com/docs/environments/cloud-environments) and
+[legacy](https://learn.chatgpt.com/docs/environments/cloud-environment) Cloud
+environments separately. If the user's task permits browser delegation, use an
+available browser tool to select the published environment in the current Cloud
+composer. Track and retrieve that task through the UI; the runner's task IDs,
+artifact collection and parent notifications are not verified for this route.
+Verify task creation and results rather than treating environment selection as
+successful delegation. If CLI automation is required, report the compatibility
+blocker. Do not read OAuth tokens or invent backend endpoints to work around it.
+
+### Worker brief and submission
 
 Write a brief containing the goal, permitted edits, relevant decisions,
 repository instructions, checks, and requested result. Use repeatable
@@ -144,7 +173,11 @@ each runner record tracks one submitted task turn, not subsequent UI turns.
 Run `python3 tests/test-cloud-agent.py` in the chezmoi source directory for
 offline lifecycle and notification tests. No live cloud task or parent queue
 message was sent during initial validation; a real environment and parent-server
-wake test remain necessary before relying on unattended orchestration.
+wake test remain necessary before relying on unattended orchestration. The live
+check above exercised CLI discovery and a failed submission; it did not validate
+worker completion, artifact retrieval or parent wake-up.
 
 - [Cloud CLI and parent queue](https://learn.chatgpt.com/docs/developer-commands)
 - [Cloud environments and isolation](https://learn.chatgpt.com/docs/environments/modes)
+- [CLI 0.164.0 environment discovery](https://github.com/openai/codex/blob/rust-v0.164.0/codex-rs/cloud-tasks/src/env_detect.rs)
+- [CLI 0.164.0 environment resolution](https://github.com/openai/codex/blob/rust-v0.164.0/codex-rs/cloud-tasks/src/lib.rs#L203)
