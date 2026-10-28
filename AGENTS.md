@@ -22,8 +22,9 @@ Templated files branch on `.chezmoi.hostname` / `.chezmoi.os` to vary behavior p
   `.chezmoitemplates/desktop-use/SKILL.md`. It drives GUI apps through the kde_agent checkout at
   `~/src/kde_agent`, which chezmoi doesn't manage.
 - `dot_config/aerospace` — macOS only.
-- `dot_claude` — Claude Code config (global `CLAUDE.md`, `skills/`). `dot_codex/AGENTS.md` holds the
-  same global rules for Codex; keep the two in sync. `settings.json` is
+- `dot_claude` — Claude Code config (global `CLAUDE.md`, `skills/`). `dot_codex/AGENTS.md.tmpl` holds the
+  same global rules for Codex; keep the two in sync. It appends the unmanaged
+  `~/.codex/AGENTS.local.md` when present, for machine-private additions. `settings.json` is
   ignored: Claude Code rewrites it on `/model` etc., so it drifted every session.
 - `dot_wezterm.lua.tmpl`, `dot_config/kitty`, `dot_config/zsh`, `dot_config/private_fish` — shared, with host/OS fragments gated by templates or ignore rules.
 - Fish config lives entirely in `dot_config/private_fish/conf.d/`; `config.fish` itself is
