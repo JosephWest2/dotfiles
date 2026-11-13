@@ -1,0 +1,10 @@
+#!/usr/bin/env python3
+# Enforced on joeyarchlinux: Baloo indexes file names only and skips code and
+# toolchain trees. Indexing them once grew the index to 22 GiB and kept the
+# NVMe ~90% busy. Baloo's own keys (dbVersion, ...) stay app-owned.
+{{ template "kconfig-set.py" . }}
+sys.stdout.write(apply(sys.stdin.read(), [
+    (["General"], "only basic indexing", "true"),
+    (["General"], "exclude folders[$e]",
+     "$HOME/development/,$HOME/miniconda3/,$HOME/homework/,$HOME/vulkan/,$HOME/go/,$HOME/src/"),
+]))

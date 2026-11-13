@@ -1,2 +1,0 @@
-# Avoid clipboard-paste injection: Codex reserves Ctrl+V for image attachments.
-export VOCALINUX_FORCE_BACKEND=wtype

@@ -107,10 +107,7 @@ check_profile() {
 
     case "$profile" in
         MacBookAir)
-            assert_ignored "$ignored" ".config/uwsm" "$profile"
-            assert_ignored "$ignored" ".config/hypr" "$profile"
             assert_ignored "$ignored" ".config/vocalinux" "$profile"
-            assert_ignored "$ignored" ".config/waybar" "$profile"
             assert_ignored "$ignored" ".local/share/applications/zen-private.desktop" "$profile"
             assert_ignored "$ignored" ".config/fish/conf.d/conda-archlinux.fish" "$profile"
             assert_ignored "$ignored" ".config/fish/conf.d/dotnet.fish" "$profile"
@@ -119,10 +116,7 @@ check_profile() {
             assert_ignored "$ignored" ".codex/skills/desktop-use" "$profile"
             ;;
         joeyarchlinux)
-            assert_included "$ignored" ".config/uwsm" "$profile"
-            assert_included "$ignored" ".config/hypr" "$profile"
             assert_ignored "$ignored" ".config/vocalinux" "$profile"
-            assert_included "$ignored" ".config/waybar" "$profile"
             assert_included "$ignored" ".local/share/applications/zen-private.desktop" "$profile"
             assert_included "$ignored" ".config/fish/conf.d/conda-archlinux.fish" "$profile"
             assert_included "$ignored" ".config/fish/conf.d/dotnet.fish" "$profile"

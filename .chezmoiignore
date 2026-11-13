@@ -28,13 +28,14 @@ setup/
 {{- end }}
 
 {{- if ne .chezmoi.hostname "joeyarchlinux" }}
-.config/hypr/
-.config/uwsm/
-.config/waybar/
 .config/fish/conf.d/conda-archlinux.fish
 .config/fish/conf.d/dotnet.fish
 .config/fish/conf.d/claude-tmpdir.fish
 .config/baloofilerc
+.config/powerdevilrc
+.cargo/
+.gnupg/
+.codex/skills/muse-subagents/
 .local/share/applications/zen-private.desktop
 .claude/skills/desktop-use/
 .codex/skills/desktop-use/

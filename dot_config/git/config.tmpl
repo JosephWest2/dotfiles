@@ -1,0 +1,23 @@
+# Shared git settings, managed by chezmoi. ~/.gitconfig (local, unmanaged) is
+# read after this file and wins on any duplicate key; `git config --global`
+# and `gh auth setup-git` write there, so they never fight this file.
+[user]
+	name = Joseph West
+	email = joeywest1414@gmail.com
+[init]
+	defaultBranch = main
+{{- $gh := lookPath "gh" }}
+{{- if $gh }}
+[credential "https://github.com"]
+	helper =
+	helper = !{{ $gh }} auth git-credential
+[credential "https://gist.github.com"]
+	helper =
+	helper = !{{ $gh }} auth git-credential
+{{- end }}
+{{- if eq .chezmoi.hostname "joeyarchlinux" }}
+# Personal GitHub key. Inside ~/homework, the include at the end of the local
+# ~/.gitconfig switches to the school key and identity (read later, so it wins).
+[core]
+	sshCommand = ssh -i ~/.ssh/id_ed25519_personal -o IdentitiesOnly=yes
+{{- end }}

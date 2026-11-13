@@ -1,0 +1,11 @@
+# Local git config. Shared settings and the personal identity are in
+# ~/.config/git/config (managed by chezmoi); keys here override them.
+# chezmoi only creates this file when it is missing, so `git config --global`
+# and `gh auth setup-git` can edit it freely.
+{{- if eq .chezmoi.hostname "joeyarchlinux" }}
+
+# Keep this include LAST: git reads in order, so the school identity and key
+# in ~/.gitconfig-homework (local, unmanaged) win inside ~/homework.
+[includeIf "gitdir:~/homework/**"]
+	path = ~/.gitconfig-homework
+{{- end }}

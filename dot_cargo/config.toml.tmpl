@@ -1,0 +1,8 @@
+# Intermediate build files live in a nested btrfs subvolume so snapper
+# snapshots of /home never pin them (created 2026-09-07 while recovering a
+# 98%-full disk). Each workspace gets its own directory, so parallel builds in
+# different projects or worktrees don't block on one shared lock or overwrite
+# each other's binaries. Final artifacts (binaries, docs) stay in each
+# project's target/. CARGO_BUILD_BUILD_DIR / CARGO_TARGET_DIR still override.
+[build]
+build-dir = "{{ .chezmoi.homeDir }}/.cargo-target/{workspace-path-hash}"

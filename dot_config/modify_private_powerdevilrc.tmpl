@@ -1,0 +1,9 @@
+#!/usr/bin/env python3
+# Enforced on joeyarchlinux: on AC, never auto-suspend (suspending cuts SSH
+# from the Mac and kills long builds/agent runs) and blank the display after
+# 15 min. Other powerdevil settings stay owned by System Settings.
+{{ template "kconfig-set.py" . }}
+sys.stdout.write(apply(sys.stdin.read(), [
+    (["AC", "SuspendAndShutdown"], "AutoSuspendAction", "0"),
+    (["AC", "Display"], "TurnOffDisplayIdleTimeoutSec", "900"),
+]))

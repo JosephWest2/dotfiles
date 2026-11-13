@@ -1,0 +1,11 @@
+adwaita-qt6-git
+bibata-cursor-theme-bin
+bruno-bin
+cursor-bin
+docker-desktop
+google-chrome
+losslesscut-bin
+python-pynput
+visual-studio-code-bin
+yay-bin
+zen-browser-bin
