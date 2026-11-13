@@ -1,0 +1,4 @@
+[General]
+dbVersion=2
+exclude folders[$e]=$HOME/development/,$HOME/miniconda3/,$HOME/homework/,$HOME/vulkan/,$HOME/go/,$HOME/src/
+only basic indexing=true

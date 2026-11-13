@@ -126,3 +126,11 @@ used as a reference when configuring Vocalinux; existing app settings remain loc
 The Conda Fish fragment supports `$HOME/miniconda3` only when its executable exists.
 If `conda init` also adds initialization to local `config.fish`, remove the duplicate
 initialization so Conda loads once.
+The fragment caches `conda shell.fish hook` output in `~/.cache/fish/conda-hook.fish`
+(regenerated when `conda-meta/history` or `bin/conda` changes), because running the hook
+took ~390 ms of every shell start. Delete that file to force regeneration.
+
+On `joeyarchlinux`, `~/.config/baloofilerc` keeps KDE's Baloo indexer to file names only
+and excludes code and toolchain directories. A full content index of those trees once
+saturated the disk and made every app launch slow. To rebuild the index after changing
+exclusions: `balooctl6 disable; balooctl6 purge; balooctl6 enable`.
