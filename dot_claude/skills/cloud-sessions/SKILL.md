@@ -102,6 +102,9 @@ The session sees only the repo and your prompt. Include:
 - **No routines:** it must not create routines, schedules or reminders
   (`mcp__Claude_Code_Remote__*` tools). The orchestrator handles wake-ups.
 - **Staying around:** tell it that review fixes will arrive in this session.
+- **Self-review:** before every marker, it reviews its own diff (for a fix round, the fix
+  diff) as a hostile reviewer would, and fixes what it finds. Most later-round review
+  findings are faults the previous fix created.
 
 ## Sandbox limits
 
@@ -186,7 +189,11 @@ immediate hard stop, archive the sessions on claude.ai.
 2. Check `git merge-base origin/main origin/<branch>` when the marker arrives, then run the
    review (e.g. Codex) locally, verify the findings, and fix small ones yourself; that's often
    faster than a round trip.
-3. Larger fixes go to the same session as a CLI follow-up (above).
+3. Send back only blocking findings (the project's merge rule says which; by default, ones
+   that would reach a user or later work, or break a check). They go to the same session as a
+   CLI follow-up (above), each as the defect and the test that confirms it, not the remedy.
+   Fix the rest yourself or list them in the PR. The round trip, not the review, is what
+   costs time.
 4. Re-review only what changed, plus regressions. Merge follows the project's merge rule.
 5. When the lane's PR merges or closes, remove it from the lane file. When the lane file is
    empty, `CronDelete` the status check.

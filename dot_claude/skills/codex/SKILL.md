@@ -49,6 +49,10 @@ Codex starts cold: it sees the repo, plus `AGENTS.md` (or `CLAUDE.md` as a fallb
 - The goal and why it matters, what you've already ruled out, and the relevant paths and symbols.
 - Scope limits ("don't touch tests", "don't run git commands", "report, don't fix").
 - The return format you need ("list file:line findings ranked by severity", "under 200 words").
+- For a review, the bar: say what makes a finding blocking for this change (the project's merge
+  rule, if it has one), and ask for everything else as one-line minors. Ask for each blocking
+  finding as the defect, a concrete input that shows it, and the test that would confirm it,
+  and leave the remedy to the implementer: a prescribed fix is often the next round's finding.
 
 For long briefs, write the prompt to a file in your scratchpad and pass `--prompt-file`. Pass logs or other material with `--context-file` (repeatable), or pipe it in with `-`.
 
@@ -88,6 +92,16 @@ precisely, finishes faster, and doesn't restart the hunt with a new set of nitpi
 anchoring by asking it to confirm each finding *and* review the whole fix diff for regressions.
 Start a fresh review when the change was substantially reworked or rebased, the session was on an
 older model, or after about three rounds.
+
+Later rounds pay off less than the first. In one project's 23 rounds, the first round's findings
+were nearly all real, while most later blocking findings were faults the previous round's fix
+had created. So, as defaults:
+
+- Send back only blocking findings. Fix the rest yourself or list them in the PR, and count a
+  round with no blocking finding as clean.
+- After a second finding in the same function, stop reading and measure: ask for a property
+  test, or run a probe on real data before and after the fix. A reviewer that only reads code
+  can pass a fix that makes real behaviour worse.
 
 ## Handling results
 
